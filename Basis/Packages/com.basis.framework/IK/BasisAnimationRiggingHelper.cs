@@ -6,7 +6,13 @@ using UnityEngine.Animations.Rigging;
 
 public static class BasisAnimationRiggingHelper
 {
-    public static void EnableTwoBoneIk(BasisTwoBoneIKConstraint Constraint, Vector3 TargetPositionOffset, Vector3 TargetRotationOffset)
+    public static void EnableSlinkySpineIK(BasisSlinkySpineIKConstraint Constraint, Vector3 TargetPositionOffset, Vector3 TargetRotationOffset)
+    {
+		Constraint.data.calibratedOffset = TargetPositionOffset;
+		Constraint.data.calibratedRotation = TargetRotationOffset;
+	}
+
+	public static void EnableTwoBoneIk(BasisTwoBoneIKConstraint Constraint, Vector3 TargetPositionOffset, Vector3 TargetRotationOffset)
     {
         Constraint.data.M_CalibratedOffset = TargetPositionOffset;
         Constraint.data.M_CalibratedRotation = TargetRotationOffset;
@@ -112,6 +118,49 @@ public static class BasisAnimationRiggingHelper
         DT.data.rootTarget = root;
         //GeneratedRequiredTransforms(root, References.Hips);
     }
+    public static void CreateSlinkySpine(BasisLocalAvatarDriver avatarDriver, BaseBoneDriver driver, GameObject parent, Transform root, Transform mid, Transform tip, BasisBoneTrackedRole tipTargetRole, BasisBoneTrackedRole midTargetRole, BasisBoneTrackedRole rootTargetRole, BasisBoneTrackedRole bendRole, bool useBoneRole, out BasisSlinkySpineIKConstraint slinkySpineIKConstraint, bool maintainTargetPositionOffset, bool maintainTargetRotationOffset)
+    {
+        driver.FindBone(out BasisBoneControl tipTargetControl, tipTargetRole);
+        driver.FindBone(out BasisBoneControl midTargetControl, midTargetRole);
+		driver.FindBone(out BasisBoneControl rootTargetControl, rootTargetRole);
+
+		GameObject boneRole = CreateAndSetParent(parent.transform, $"Bone Role {tipTargetRole.ToString()}");
+        slinkySpineIKConstraint = BasisHelpers.GetOrAddComponent<BasisSlinkySpineIKConstraint>(boneRole);
+
+        Vector3 PositionOffset = new Vector3(0, 0, 0);
+        Quaternion RotationOffset = tip.rotation;
+
+        EnableSlinkySpineIK(slinkySpineIKConstraint, PositionOffset, RotationOffset.eulerAngles);
+
+        Quaternion tipRotation = tipTargetControl.OutgoingWorldData.rotation;
+        Quaternion midRotation = midTargetControl.OutgoingWorldData.rotation;
+        Quaternion rootRotation = rootTargetControl.OutgoingWorldData.rotation;
+
+        slinkySpineIKConstraint.data.tipTargetPosition = tipTargetControl.OutgoingWorldData.position;
+		slinkySpineIKConstraint.data.midTargetPosition = midTargetControl.OutgoingWorldData.position;
+		slinkySpineIKConstraint.data.rootTargetPosition = rootTargetControl.OutgoingWorldData.position;
+
+		slinkySpineIKConstraint.data.tipTargetRotation = tipRotation.eulerAngles;
+		slinkySpineIKConstraint.data.midTargetRotation = midRotation.eulerAngles;
+		slinkySpineIKConstraint.data.rootTargetRotation = rootRotation.eulerAngles;
+
+        if (useBoneRole)
+        {
+            if (driver.FindBone(out BasisBoneControl hintControl, bendRole))
+            {
+                Quaternion hintRotation = hintControl.OutgoingWorldData.rotation;
+                slinkySpineIKConstraint.data.hintPosition = hintControl.OutgoingWorldData.position;
+                slinkySpineIKConstraint.data.hintRotation = hintRotation.eulerAngles;
+            }
+        }
+
+        slinkySpineIKConstraint.data.root = root;
+        slinkySpineIKConstraint.data.mid = mid;
+        slinkySpineIKConstraint.data.tip = tip;
+
+        GeneratedRequiredTransforms(avatarDriver, tip);
+	}
+
     public static void CreateTwoBone(BasisLocalAvatarDriver AvatarDriver, BaseBoneDriver driver, GameObject Parent, Transform root, Transform mid, Transform tip, BasisBoneTrackedRole TargetRole, BasisBoneTrackedRole BendRole, bool UseBoneRole, out BasisTwoBoneIKConstraint TwoBoneIKConstraint, bool maintainTargetPositionOffset, bool maintainTargetRotationOffset)
     {
         driver.FindBone(out BasisBoneControl TargetControl, TargetRole);
@@ -122,7 +171,7 @@ public static class BasisAnimationRiggingHelper
 
         Vector3 PositionOffset = new Vector3(0, 0, 0);
 
-        Quaternion RotationOffset =  tip.rotation;//Quaternion.Inverse(TargetControl.OutgoingWorldData.rotation) *
+        Quaternion RotationOffset =  tip.rotation;
         EnableTwoBoneIk(TwoBoneIKConstraint, PositionOffset, RotationOffset.eulerAngles);
         Quaternion Rotation = TargetControl.OutgoingWorldData.rotation;
         TwoBoneIKConstraint.data.TargetPosition = TargetControl.OutgoingWorldData.position;

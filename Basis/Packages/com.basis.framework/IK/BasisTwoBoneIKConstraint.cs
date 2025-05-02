@@ -106,6 +106,7 @@ namespace UnityEngine.Animations.Rigging
             m_Data.hintWeight = m_Data.hintWeight;
         }
     }
+
     /// <summary>
     /// The TwoBoneIK constraint job.
     /// </summary>
@@ -154,11 +155,10 @@ namespace UnityEngine.Animations.Rigging
             float w = jobWeight.Get(stream);
             if (w > 0f)
             {
-                // BasisDebug.Log("Value is " + targetPosition);
                 AffineTransform target = new AffineTransform(targetPosition.Get(stream), Quaternion.Euler(targetRotation.Get(stream)));
                 AffineTransform hint = new AffineTransform(hintPosition.Get(stream), Quaternion.Euler(hintRotation.Get(stream)));
                 Vector3 BendNormalOutput = BendNormal.Get(stream);
-                //   BasisDebug.Log("Output Normal is " + BendNormalOutput);
+
                 BasisAnimationRuntimeUtils.SolveTwoBoneIKLegsAndTorso(stream, root, mid, tip, target, hint, hintWeight.Get(stream), targetOffset, BendNormalOutput);
             }
             else
@@ -234,7 +234,8 @@ namespace UnityEngine.Animations.Rigging
 
                 targetOffset = AffineTransform.identity,
             };
-            job.targetOffset.translation = data.CalibratedOffset;
+
+			job.targetOffset.translation = data.CalibratedOffset;
             job.targetOffset.rotation = Quaternion.Euler(data.CalibratedRotation);
             job.hintWeight = BoolProperty.Bind(animator, component, data.hintWeightFloatProperty);
             job.BendNormal = Vector3Property.Bind(animator, component, data.HintDirectionProperty);
@@ -246,8 +247,6 @@ namespace UnityEngine.Animations.Rigging
         /// Destroys the animation job.
         /// </summary>
         /// <param name="job">The animation job to destroy.</param>
-        public override void Destroy(BasisTwoBoneIKConstraintJob job)
-        {
-        }
+        public override void Destroy(BasisTwoBoneIKConstraintJob job) { }
     }
 }

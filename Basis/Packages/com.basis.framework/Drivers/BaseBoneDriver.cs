@@ -253,63 +253,62 @@ namespace Basis.Scripts.Drivers
         public static float DefaultGizmoSize = 0.05f;
         public static float HandGizmoSize = 0.015f;
         public void DrawGizmos(BasisBoneControl Control)
-        {
-            if (Control.HasBone)
-            {
-                Vector3 BonePosition = Control.OutgoingWorldData.position;
-                if (Control.HasTarget)
-                {
-                    if (Control.HasLineDraw)
-                    {
-                        BasisGizmoManager.UpdateLineGizmo(Control.LineDrawIndex, BonePosition, Control.Target.OutgoingWorldData.position);
-                    }
-                }
-                if (BasisLocalPlayer.Instance.LocalBoneDriver.FindTrackedRole(Control, out BasisBoneTrackedRole Role))
-                {
-                    if(Role == BasisBoneTrackedRole.CenterEye)
-                    {
-                        //ignoring center eye to stop you having issues in vr
-                        return;
-                    }
-                    if (Control.HasGizmo)
-                    {
-                        if (BasisGizmoManager.UpdateSphereGizmo(Control.GizmoReference, BonePosition) == false)
-                        {
-                            Control.HasGizmo = false;
-                        }
-                    }
-                }
-                if (BasisLocalPlayer.Instance.LocalAvatarDriver.CurrentlyTposing)
-                {
-                    if (BasisLocalPlayer.Instance.LocalBoneDriver.FindTrackedRole(Control, out BasisBoneTrackedRole role))
-                    {
-                        if (Role == BasisBoneTrackedRole.CenterEye)
-                        {
-                            //ignoring center eye to stop you having issues in vr
-                            return;
-                        }
-                        if (BasisBoneTrackedRoleCommonCheck.CheckItsFBTracker(role))
-                        {
-                            if (Control.TposeHasGizmo)
-                            {
-                                if (BasisGizmoManager.UpdateSphereGizmo(Control.TposeGizmoReference, BonePosition) == false)
-                                {
-                                    Control.TposeHasGizmo = false;
-                                }
-                            }
-                            else
-                            {
-                                if (BasisGizmoManager.CreateSphereGizmo(out Control.TposeGizmoReference, BonePosition, BasisAvatarIKStageCalibration.MaxDistanceBeforeMax(role) * BasisLocalPlayer.Instance.CurrentHeight.SelectedAvatarToAvatarDefaultScale, Control.Color))
-                                {
-                                    Control.TposeHasGizmo = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        public class OrderedDelegate
+		{
+            if (!Control.HasBone) return;
+
+			Vector3 BonePosition = Control.OutgoingWorldData.position;
+			if (Control.HasTarget)
+			{
+				if (Control.HasLineDraw)
+				{
+					BasisGizmoManager.UpdateLineGizmo(Control.LineDrawIndex, BonePosition, Control.Target.OutgoingWorldData.position);
+				}
+			}
+			if (BasisLocalPlayer.Instance.LocalBoneDriver.FindTrackedRole(Control, out BasisBoneTrackedRole Role))
+			{
+				if (Role == BasisBoneTrackedRole.CenterEye)
+				{
+					//ignoring center eye to stop you having issues in vr
+					return;
+				}
+				if (Control.HasGizmo)
+				{
+					if (BasisGizmoManager.UpdateSphereGizmo(Control.GizmoReference, BonePosition) == false)
+					{
+						Control.HasGizmo = false;
+					}
+				}
+			}
+			if (BasisLocalPlayer.Instance.LocalAvatarDriver.CurrentlyTposing)
+			{
+				if (BasisLocalPlayer.Instance.LocalBoneDriver.FindTrackedRole(Control, out BasisBoneTrackedRole role))
+				{
+					if (Role == BasisBoneTrackedRole.CenterEye)
+					{
+						//ignoring center eye to stop you having issues in vr
+						return;
+					}
+					if (BasisBoneTrackedRoleCommonCheck.CheckItsFBTracker(role))
+					{
+						if (Control.TposeHasGizmo)
+						{
+							if (BasisGizmoManager.UpdateSphereGizmo(Control.TposeGizmoReference, BonePosition) == false)
+							{
+								Control.TposeHasGizmo = false;
+							}
+						}
+						else
+						{
+							if (BasisGizmoManager.CreateSphereGizmo(out Control.TposeGizmoReference, BonePosition, BasisAvatarIKStageCalibration.MaxDistanceBeforeMax(role) * BasisLocalPlayer.Instance.CurrentHeight.SelectedAvatarToAvatarDefaultScale, Control.Color))
+							{
+								Control.TposeHasGizmo = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		public class OrderedDelegate
         {
             private List<KeyValuePair<int, Action>> actions = new List<KeyValuePair<int, Action>>();
             private bool isSorted = true;

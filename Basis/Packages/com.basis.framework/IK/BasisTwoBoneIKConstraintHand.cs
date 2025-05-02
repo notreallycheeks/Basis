@@ -143,7 +143,8 @@ namespace UnityEngine.Animations.Rigging
                 // BasisDebug.Log("Value is " + targetPosition);
                 AffineTransform target = new AffineTransform(targetPosition.Get(stream), Quaternion.Euler(targetRotation.Get(stream)));
                 AffineTransform hint = new AffineTransform(hintPosition.Get(stream), Quaternion.Euler(hintRotation.Get(stream)));
-                //   BasisDebug.Log("Output Normal is " + BendNormalOutput);
+
+                Debug.Log("SolveTwoBoneIKArms");
                 BasisAnimationRuntimeUtils.SolveTwoBoneIKArms(stream, root, mid, tip, target, hint, hintWeight.Get(stream), targetOffset);
             }
             else

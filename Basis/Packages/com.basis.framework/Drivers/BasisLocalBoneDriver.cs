@@ -7,6 +7,7 @@ namespace Basis.Scripts.Drivers
     public class BasisLocalBoneDriver : BaseBoneDriver
     {
         public static BasisBoneControl Head;
+        public static BasisBoneControl NeckControl;
         public static BasisBoneControl Hips;
         public static BasisBoneControl Eye;
         public static BasisBoneControl Mouth;
@@ -30,7 +31,8 @@ namespace Basis.Scripts.Drivers
 
             // --- Bone Lookup ---
             FindBone(out HeadControl, BasisBoneTrackedRole.Head);
-            FindBone(out LeftFootControl, BasisBoneTrackedRole.LeftFoot);
+			FindBone(out NeckControl, BasisBoneTrackedRole.Neck);
+			FindBone(out LeftFootControl, BasisBoneTrackedRole.LeftFoot);
             FindBone(out RightFootControl, BasisBoneTrackedRole.RightFoot);
             FindBone(out LeftHandControl, BasisBoneTrackedRole.LeftHand);
             FindBone(out RightHandControl, BasisBoneTrackedRole.RightHand);

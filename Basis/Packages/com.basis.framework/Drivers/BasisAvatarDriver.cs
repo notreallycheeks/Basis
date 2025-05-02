@@ -310,22 +310,20 @@ namespace Basis.Scripts.Drivers
             }
         }
         public void SetAndCreateLock(BaseBoneDriver BaseBoneDriver, BasisBoneTrackedRole LockToBoneRole, BasisBoneTrackedRole AssignedTo, float PositionLerpAmount, float QuaternionLerpAmount, bool CreateLocks = true)
-        {
-            if (CreateLocks)
-            {
+		{
+			if (!CreateLocks) return;
 
-                if (BaseBoneDriver.FindBone(out BasisBoneControl AssignedToAddToBone, AssignedTo) == false)
-                {
-                    BasisDebug.LogError("Cant Find Bone " + AssignedTo);
-                }
-                if (BaseBoneDriver.FindBone(out BasisBoneControl LockToBone, LockToBoneRole) == false)
-                {
-                    BasisDebug.LogError("Cant Find Bone " + LockToBoneRole);
-                }
-                BaseBoneDriver.CreateRotationalLock(AssignedToAddToBone, LockToBone, PositionLerpAmount, QuaternionLerpAmount);
-            }
-        }
-        public int SkinnedMeshRendererLength;
+			if (BaseBoneDriver.FindBone(out BasisBoneControl AssignedToAddToBone, AssignedTo) == false)
+			{
+				BasisDebug.LogError("Cant Find Bone " + AssignedTo);
+			}
+			if (BaseBoneDriver.FindBone(out BasisBoneControl LockToBone, LockToBoneRole) == false)
+			{
+				BasisDebug.LogError("Cant Find Bone " + LockToBoneRole);
+			}
+			BaseBoneDriver.CreateRotationalLock(AssignedToAddToBone, LockToBone, PositionLerpAmount, QuaternionLerpAmount);
+		}
+		public int SkinnedMeshRendererLength;
         public void FindSkinnedMeshRenders()
         {
             SkinnedMeshRenderer = Player.BasisAvatar.Animator.GetComponentsInChildren<SkinnedMeshRenderer>(true);
