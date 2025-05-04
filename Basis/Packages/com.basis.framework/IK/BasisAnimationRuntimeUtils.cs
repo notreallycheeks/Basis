@@ -20,6 +20,98 @@ public static class BasisAnimationRuntimeUtils
 
     public static void SolveSlinkySpineIK(AnimationStream stream, ReadWriteTransformHandle root, ReadWriteTransformHandle mid, ReadWriteTransformHandle tip, AffineTransform rootTarget, AffineTransform midTarget, AffineTransform tipTarget, AffineTransform hint, bool hasHint, AffineTransform targetOffset, Vector3 hintTransform)
     {
+		Vector3 rootPosition = root.GetPosition(stream);
+		Vector3 midPosition = mid.GetPosition(stream);
+		Vector3 tipPosition = tip.GetPosition(stream);
+
+		Vector3 tipTargetPos = tipTarget.translation;
+		Quaternion tipTargetRot = tipTarget.rotation;
+		Vector3 midTargetPos = midTarget.translation;
+		Quaternion midTargetRot = midTarget.rotation;
+		Vector3 rootTargetPos = rootTarget.translation;
+		Quaternion rootTargetRot = rootTarget.rotation;
+
+		Vector3 tipTargetPosition = tipTargetPos + targetOffset.translation;
+		Quaternion tipTargetRotation = tipTargetRot * targetOffset.rotation;
+
+		Vector3 ab = midPosition - rootPosition;
+		Vector3 bc = tipPosition - midPosition;
+		Vector3 ac = tipPosition - rootPosition;
+		Vector3 at = tipTargetPosition - rootPosition;
+
+		float abLen = ab.magnitude;
+		float bcLen = bc.magnitude;
+		float acLen = ac.magnitude;
+		float atLen = at.magnitude;
+
+		float oldAbcAngle = TriangleAngle(acLen, abLen, bcLen);
+		float newAbcAngle = TriangleAngle(atLen, abLen, bcLen);
+		Vector3 axis;
+
+		if (hasHint)
+		{
+			axis = Vector3.Cross(hint.translation - rootPosition, bc);
+
+			if (axis.sqrMagnitude < k_SqrEpsilon)
+			{
+				axis = Vector3.Cross(at, bc);
+			}
+
+			if (axis.sqrMagnitude < k_SqrEpsilon)
+			{
+				axis = hintTransform;
+			}
+		}
+		else
+		{
+			axis = hintTransform;
+		}
+
+		axis = Vector3.Normalize(axis);
+
+		float halfAngle = 0.5f * (oldAbcAngle - newAbcAngle);
+		float sin = Mathf.Sin(halfAngle);
+		float cos = Mathf.Cos(halfAngle);
+		Quaternion deltaR = new Quaternion(axis.x * sin, axis.y * sin, axis.z * sin, cos);
+		mid.SetPosition(stream, midTargetPos);
+		mid.SetRotation(stream, deltaR * mid.GetRotation(stream));
+
+        tipPosition = tip.GetPosition(stream);
+        ac = tipPosition - rootPosition;
+        root.SetPosition(stream, rootTargetPos);
+        root.SetRotation(stream, QuaternionExt.FromToRotation(ac, at) * root.GetRotation(stream));
+
+        if (hasHint)
+        {
+            float acSqrMag = ac.sqrMagnitude;
+            if (acSqrMag > 0f)
+            {
+                midPosition = mid.GetPosition(stream);
+                tipPosition = tip.GetPosition(stream);
+                ab = midPosition - rootPosition;
+                ac = tipPosition - rootPosition;
+
+                Vector3 acNorm = ac / Mathf.Sqrt(acSqrMag);
+                Vector3 ah = hint.translation - rootPosition;
+                Vector3 abProj = ab - acNorm * Vector3.Dot(ab, acNorm);
+                Vector3 ahProj = ah - acNorm * Vector3.Dot(ah, acNorm);
+
+                float maxReach = abLen + bcLen;
+                if (abProj.sqrMagnitude > (maxReach * maxReach * 0.001f) && ahProj.sqrMagnitude > 0f)
+                {
+                    Quaternion hintR = QuaternionExt.FromToRotation(abProj, ahProj);
+                    hintR = QuaternionExt.NormalizeSafe(hintR);
+                    root.SetRotation(stream, hintR * root.GetRotation(stream));
+                }
+            }
+        }
+
+        tip.SetPosition(stream, tipTargetPosition);
+        tip.SetRotation(stream, tipTargetRotation);
+	}
+
+	public static void SolveSlinkySpineHipIK(AnimationStream stream, ReadWriteTransformHandle root, ReadWriteTransformHandle mid, ReadWriteTransformHandle tip, AffineTransform rootTarget, AffineTransform midTarget, AffineTransform tipTarget, AffineTransform hint, bool hasHint, AffineTransform targetOffset, Vector3 hintTransform)
+	{
 		Vector3 aPosition = root.GetPosition(stream);
 		Vector3 bPosition = mid.GetPosition(stream);
 		Vector3 cPosition = tip.GetPosition(stream);
@@ -74,44 +166,13 @@ public static class BasisAnimationRuntimeUtils
 		float sin = Mathf.Sin(halfAngle);
 		float cos = Mathf.Cos(halfAngle);
 		Quaternion deltaR = new Quaternion(axis.x * sin, axis.y * sin, axis.z * sin, cos);
-		root.SetPosition(stream, midTargetPos);
+		mid.SetPosition(stream, midTargetPos);
 		mid.SetRotation(stream, deltaR * mid.GetRotation(stream));
 
-		cPosition = tip.GetPosition(stream);
-		ac = cPosition - aPosition;
-        root.SetPosition(stream, rootTargetPos);
-		root.SetRotation(stream, QuaternionExt.FromToRotation(ac, at) * root.GetRotation(stream));
-
-		if (hasHint)
-		{
-			float acSqrMag = ac.sqrMagnitude;
-			if (acSqrMag > 0f)
-			{
-				bPosition = mid.GetPosition(stream);
-				cPosition = tip.GetPosition(stream);
-				ab = bPosition - aPosition;
-				ac = cPosition - aPosition;
-
-				Vector3 acNorm = ac / Mathf.Sqrt(acSqrMag);
-				Vector3 ah = hint.translation - aPosition;
-				Vector3 abProj = ab - acNorm * Vector3.Dot(ab, acNorm);
-				Vector3 ahProj = ah - acNorm * Vector3.Dot(ah, acNorm);
-
-				float maxReach = abLen + bcLen;
-				if (abProj.sqrMagnitude > (maxReach * maxReach * 0.001f) && ahProj.sqrMagnitude > 0f)
-				{
-					Quaternion hintR = QuaternionExt.FromToRotation(abProj, ahProj);
-					hintR = QuaternionExt.NormalizeSafe(hintR);
-					root.SetRotation(stream, hintR * root.GetRotation(stream));
-				}
-			}
-		}
-
-		tip.SetPosition(stream, tipPosition);
+        tip.SetPosition(stream, tipPosition);
 		tip.SetRotation(stream, tipRotation);
-
-		//Debug.Log("Tip Position: " + tip.GetPosition(stream) + " TargetOffsetTranslation: " + targetOffset.translation);
 	}
+
 
 	public static void SolveTwoBoneIKLegsAndTorso(AnimationStream stream, ReadWriteTransformHandle root,   ReadWriteTransformHandle mid,ReadWriteTransformHandle tip,AffineTransform target,AffineTransform hint,bool HasHint,AffineTransform targetOffset, Vector3 BendNormal )
     {

@@ -21,16 +21,6 @@ public class BasisVirtualSpineDriver
     [Header("Upper Body")]
     [SerializeField] private BasisBoneControl rightShoulder;
     [SerializeField] private BasisBoneControl leftShoulder;
-    [SerializeField] private BasisBoneControl leftLowerArm;
-    [SerializeField] private BasisBoneControl rightLowerArm;
-    [SerializeField] private BasisBoneControl leftHand;
-    [SerializeField] private BasisBoneControl rightHand;
-
-    [Header("Lower Body")]
-    [SerializeField] private BasisBoneControl leftLowerLeg;
-    [SerializeField] private BasisBoneControl rightLowerLeg;
-    [SerializeField] private BasisBoneControl leftFoot;
-    [SerializeField] private BasisBoneControl rightFoot;
     #endregion
 
     #region Configuration
@@ -40,14 +30,14 @@ public class BasisVirtualSpineDriver
     [SerializeField] private float spineRotationSpeed = 30f;
     [SerializeField] private float hipsRotationSpeed = 40f;
 
-    // Weights should add up to 1.
+    // Weights should add up to 1f.
     [Header("Bone Weights")]
-    [SerializeField] private float neckWeight = 0.1f;    // How much the neck stretches
-    [SerializeField] private float chestWeight = 0.3f;    // How much the chest stretches
-    [SerializeField] private float spineWeight = 0.6f;   // How much the spine stretches
-    [SerializeField] private float hipsWeight = 0f;       // Hips don't stretch
+    [SerializeField] private float headToNeckWeight = 0.1f;    
+    [SerializeField] private float neckToChestWeight = 0.2f;    
+    [SerializeField] private float chestToSpineWeight = 0.3f;   
+    [SerializeField] private float spineToHipsWeight = 0.5f;       
 
-    private float yHeadDiff = 0f;
+    private float relativeYHeadDiff = 0f;
 
     #endregion
 
@@ -80,17 +70,7 @@ public class BasisVirtualSpineDriver
             hips.HasVirtualOverride = true;
         }
 
-        // Initialize remaining bones without virtual override
-        localBoneDriver.FindBone(out leftLowerArm, BasisBoneTrackedRole.LeftLowerArm);
-        localBoneDriver.FindBone(out rightLowerArm, BasisBoneTrackedRole.RightLowerArm);
-        localBoneDriver.FindBone(out leftLowerLeg, BasisBoneTrackedRole.LeftLowerLeg);
-        localBoneDriver.FindBone(out rightLowerLeg, BasisBoneTrackedRole.RightLowerLeg);
-        localBoneDriver.FindBone(out leftHand, BasisBoneTrackedRole.LeftHand);
-        localBoneDriver.FindBone(out rightHand, BasisBoneTrackedRole.RightHand);
-        localBoneDriver.FindBone(out leftFoot, BasisBoneTrackedRole.LeftFoot);
-        localBoneDriver.FindBone(out rightFoot, BasisBoneTrackedRole.RightFoot);
-
-        BasisLocalPlayer.Instance.OnPreSimulateBones += OnSimulateHead;
+        BasisLocalPlayer.Instance.OnPreSimulateBones += OnSimulateSpine;
     }
 
     /// <summary>
@@ -103,13 +83,13 @@ public class BasisVirtualSpineDriver
         if (hips != null) hips.HasVirtualOverride = false;
         if (spine != null) spine.HasVirtualOverride = false;
 
-        BasisLocalPlayer.Instance.OnPreSimulateBones -= OnSimulateHead;
+        BasisLocalPlayer.Instance.OnPreSimulateBones -= OnSimulateSpine;
     }
 
     /// <summary>
     /// Simulates head and spine movement based on center eye tracking.
     /// </summary>
-    private void OnSimulateHead()
+    private void OnSimulateSpine()
     {
         float deltaTime = Time.deltaTime;
 
@@ -133,27 +113,26 @@ public class BasisVirtualSpineDriver
 		hips.OutGoingData.rotation = Quaternion.Euler(0, targetHipsRotationEuler.y, 0);
 
 		// Apply position control with weighted offsets
-		ApplyBasicPositionControl(head);
+		ApplyRelativePositionControl(head);
 
-        ApplyPositionControlWithWeight(neck, neckWeight);
-        ApplyPositionControlWithWeight(chest, chestWeight);
-        ApplyPositionControlWithWeight(spine, spineWeight);
-        ApplyPositionControlWithWeight(hips, hipsWeight);
+		ApplyRelativePositionControlWithWeight(neck, headToNeckWeight);
+		ApplyRelativePositionControlWithWeight(chest, neckToChestWeight);
+		ApplyRelativePositionControlWithWeight(spine, chestToSpineWeight);
+		ApplyRelativePositionControlWithWeight(hips, spineToHipsWeight);
     }
 
     /// <summary>
     /// Calculates the angle between the head's forward direction and the hip-head vector.
     /// </summary>
-	private float CalculateStretchAmount()
-	{
-        var stretchAmount = Mathf.Clamp(yHeadDiff, -maximumCompressionAmount, maximumStretchAmount);
-        //Debug.Log("yHeadDiff: " + yHeadDiff + " MaximumCompression: " + -maximumCompressionAmount + " MaximumStretch: " + maximumStretchAmount);
-        return stretchAmount;
-	}
-
-    private float maximumCompressionAmount => head.Offset.y - -Vector3.Magnitude(head.Offset);
+	private float3 relativeHeadHipVector => head.OutGoingData.position - hips.OutGoingData.position;
+	private float maximumCompressionAmount => head.Offset.y - -Vector3.Magnitude(head.Offset);
     private float maximumStretchAmount => Vector3.Magnitude(head.Offset) - head.Offset.y;
+	private float stretchAmount => Mathf.Clamp(relativeYHeadDiff, -maximumCompressionAmount, maximumStretchAmount);
 
+	private float WeightedStretchAmount(float weight)
+    {
+        return stretchAmount * weight;
+	}
 	private float3 RelativeOffset(BasisBoneControl bone)
     {
         return bone.Target.OutGoingData.position + math.mul(bone.Target.OutGoingData.rotation, bone.Offset);
@@ -164,18 +143,23 @@ public class BasisVirtualSpineDriver
     }
 
 	/// <summary>
-	/// Applies position control for the head bone.
+	/// Puts bone in position of offset relative to target rotation.
 	/// </summary>
-	private void ApplyBasicPositionControl(BasisBoneControl boneControl)
+	private void ApplyRelativePositionControl(BasisBoneControl boneControl)
     {
-        yHeadDiff = RelativeOffset(boneControl).y - TPoseOffset(boneControl).y;
+        if(boneControl == head)
+        {
+			relativeYHeadDiff = RelativeOffset(boneControl).y - TPoseOffset(boneControl).y;
+            //Debug.Log(relativeYHeadDiff);
+		}
+
 		boneControl.OutGoingData.position = RelativeOffset(boneControl);
 	}
 
 	/// <summary>
 	/// Applies position control for a bone based on its target's rotation, with weighted offset.
 	/// </summary>
-	private void ApplyPositionControlWithWeight(BasisBoneControl boneControl, float weight)
+	private void ApplyRelativePositionControlWithWeight(BasisBoneControl boneControl, float weight)
     {
         quaternion targetRotation = boneControl.Target.OutGoingData.rotation;
 
@@ -184,15 +168,14 @@ public class BasisVirtualSpineDriver
         forward.y = 0;
         forward = math.normalize(forward);
 
-        quaternion yawRotation = quaternion.LookRotationSafe(forward, new float3(0, 1, 0));
+        quaternion pitch = quaternion.LookRotationSafe(forward, new float3(0, 1, 0));
         
         // Calculate base offset
-        float3 baseOffset = math.mul(yawRotation, boneControl.Offset);
+        float3 baseOffset = math.mul(pitch, boneControl.Offset);
         
         // Apply weighted stretch to the offset
         float3 stretchedOffset = baseOffset;
-
-        stretchedOffset.y -= CalculateStretchAmount() * weight;
+        stretchedOffset -= math.normalize(relativeHeadHipVector) * WeightedStretchAmount(weight);
 
         boneControl.OutGoingData.position = boneControl.Target.OutGoingData.position + stretchedOffset;
     }

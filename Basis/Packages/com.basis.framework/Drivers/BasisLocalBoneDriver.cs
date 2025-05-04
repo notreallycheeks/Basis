@@ -16,12 +16,14 @@ namespace Basis.Scripts.Drivers
         public static BasisBoneControl RightFootControl;
         public static BasisBoneControl LeftHandControl;
         public static BasisBoneControl RightHandControl;
+        public static BasisBoneControl SpineControl;
         public static BasisBoneControl ChestControl;
         public static BasisBoneControl LeftLowerLegControl;
         public static BasisBoneControl RightLowerLegControl;
         public static BasisBoneControl LeftLowerArmControl;
         public static BasisBoneControl RightLowerArmControl;
         public static bool HasEye;
+
         public void InitalizeLocal()
         {
             HasEye = FindBone(out Eye, BasisBoneTrackedRole.CenterEye);
@@ -36,13 +38,14 @@ namespace Basis.Scripts.Drivers
             FindBone(out RightFootControl, BasisBoneTrackedRole.RightFoot);
             FindBone(out LeftHandControl, BasisBoneTrackedRole.LeftHand);
             FindBone(out RightHandControl, BasisBoneTrackedRole.RightHand);
-
-            FindBone(out ChestControl, BasisBoneTrackedRole.Chest);
+			FindBone(out SpineControl, BasisBoneTrackedRole.Spine);
+			FindBone(out ChestControl, BasisBoneTrackedRole.Chest);
             FindBone(out LeftLowerLegControl, BasisBoneTrackedRole.LeftLowerLeg);
             FindBone(out RightLowerLegControl, BasisBoneTrackedRole.RightLowerLeg);
             FindBone(out LeftLowerArmControl, BasisBoneTrackedRole.LeftLowerArm);
             FindBone(out RightLowerArmControl, BasisBoneTrackedRole.RightLowerArm);
         }
+
         public void PostSimulateBonePositions()
         {
             SimulateWorldDestinations(BasisLocalPlayer.Instance.transform);

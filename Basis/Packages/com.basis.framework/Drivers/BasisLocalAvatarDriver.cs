@@ -19,6 +19,7 @@ namespace Basis.Scripts.Drivers
         public static Vector3 HeadScale = Vector3.one;
         public static Vector3 HeadScaledDown = Vector3.zero;
         public BasisSlinkySpineIKConstraint HeadTwoBoneIK;
+        public BasisSlinkySpineHipIKConstraint ChestTwoBoneIK;
         public BasisTwoBoneIKConstraint LeftFootTwoBoneIK;
         public BasisTwoBoneIKConstraint RightFootTwoBoneIK;
         public BasisTwoBoneIKConstraintHand LeftHandTwoBoneIK;
@@ -35,7 +36,18 @@ namespace Basis.Scripts.Drivers
 				BasisLocalBoneDriver.NeckControl.OutgoingWorldData.position,
 				BasisLocalBoneDriver.NeckControl.OutgoingWorldData.rotation,
 				BasisLocalBoneDriver.ChestControl.OutgoingWorldData.position,
-				BasisLocalBoneDriver.ChestControl.OutgoingWorldData.rotation);
+				BasisLocalBoneDriver.ChestControl.OutgoingWorldData.rotation
+                );
+
+            ApplyBoneIKTarget(
+                ChestTwoBoneIK,
+                BasisLocalBoneDriver.ChestControl.OutgoingWorldData.position,
+                BasisLocalBoneDriver.ChestControl.OutgoingWorldData.rotation,
+                BasisLocalBoneDriver.SpineControl.OutgoingWorldData.position,
+                BasisLocalBoneDriver.SpineControl.OutgoingWorldData.rotation,
+                BasisLocalBoneDriver.Hips.OutgoingWorldData.position,
+                BasisLocalBoneDriver.Hips.OutgoingWorldData.rotation
+                );
 
             ApplyBoneIKTarget(LeftFootTwoBoneIK, BasisLocalBoneDriver.LeftFootControl.OutgoingWorldData.position, BasisLocalBoneDriver.LeftFootControl.OutgoingWorldData.rotation);
             ApplyBoneIKTarget(RightFootTwoBoneIK, BasisLocalBoneDriver.RightFootControl.OutgoingWorldData.position, BasisLocalBoneDriver.RightFootControl.OutgoingWorldData.rotation);
@@ -46,7 +58,9 @@ namespace Basis.Scripts.Drivers
 
             // --- IK Hint ---
             ApplyBoneIKHint(HeadTwoBoneIK, BasisLocalBoneDriver.ChestControl.OutgoingWorldData.position, BasisLocalBoneDriver.ChestControl.OutgoingWorldData.rotation, Direction);
-            ApplyBoneIKHint(LeftFootTwoBoneIK, BasisLocalBoneDriver.LeftLowerLegControl.OutgoingWorldData.position, BasisLocalBoneDriver.LeftLowerLegControl.OutgoingWorldData.rotation, Direction);
+			ApplyBoneIKHint(ChestTwoBoneIK, BasisLocalBoneDriver.Hips.OutgoingWorldData.position, BasisLocalBoneDriver.Hips.OutgoingWorldData.rotation, Direction);
+
+			ApplyBoneIKHint(LeftFootTwoBoneIK, BasisLocalBoneDriver.LeftLowerLegControl.OutgoingWorldData.position, BasisLocalBoneDriver.LeftLowerLegControl.OutgoingWorldData.rotation, Direction);
             ApplyBoneIKHint(RightFootTwoBoneIK, BasisLocalBoneDriver.RightLowerLegControl.OutgoingWorldData.position, BasisLocalBoneDriver.RightLowerLegControl.OutgoingWorldData.rotation, Direction);
             ApplyBoneIKHint(LeftHandTwoBoneIK, BasisLocalBoneDriver.LeftLowerArmControl.OutgoingWorldData.position, BasisLocalBoneDriver.LeftLowerArmControl.OutgoingWorldData.rotation);
             ApplyBoneIKHint(RightHandTwoBoneIK, BasisLocalBoneDriver.RightLowerArmControl.OutgoingWorldData.position, BasisLocalBoneDriver.RightLowerArmControl.OutgoingWorldData.rotation);
@@ -58,6 +72,12 @@ namespace Basis.Scripts.Drivers
             Constraint.data.m_HintDirection = Direction;
         }
 		public void ApplyBoneIKHint(BasisSlinkySpineIKConstraint Constraint, Vector3 Position, Quaternion Rotation, Vector3 Direction)
+		{
+			Constraint.data.hintPosition = Position;
+			Constraint.data.hintRotation = Rotation.eulerAngles;
+			Constraint.data.m_HintDirection = Direction;
+		}
+		public void ApplyBoneIKHint(BasisSlinkySpineHipIKConstraint Constraint, Vector3 Position, Quaternion Rotation, Vector3 Direction)
 		{
 			Constraint.data.hintPosition = Position;
 			Constraint.data.hintRotation = Rotation.eulerAngles;
@@ -87,7 +107,16 @@ namespace Basis.Scripts.Drivers
 			Constraint.data.midTargetRotation = midRotation.eulerAngles;
 			Constraint.data.rootTargetRotation = rootRotation.eulerAngles;
 		}
-        public void ApplyBoneIKTarget(BasisTwoBoneIKConstraintHand Constraint, Vector3 Position, Quaternion Rotation)
+		public void ApplyBoneIKTarget(BasisSlinkySpineHipIKConstraint Constraint, Vector3 tipPosition, Quaternion tipRotation, Vector3 midPosition, Quaternion midRotation, Vector3 rootPosition, Quaternion rootRotation)
+		{
+			Constraint.data.tipTargetPosition = tipPosition;
+			Constraint.data.midTargetPosition = midPosition;
+			Constraint.data.rootTargetPosition = rootPosition;
+			Constraint.data.tipTargetRotation = tipRotation.eulerAngles;
+			Constraint.data.midTargetRotation = midRotation.eulerAngles;
+			Constraint.data.rootTargetRotation = rootRotation.eulerAngles;
+		}
+		public void ApplyBoneIKTarget(BasisTwoBoneIKConstraintHand Constraint, Vector3 Position, Quaternion Rotation)
         {
             Constraint.data.TargetPosition = Position;
             Constraint.data.TargetRotation = Rotation.eulerAngles;
@@ -353,6 +382,7 @@ namespace Basis.Scripts.Drivers
         public void SetBodySettings(BasisLocalBoneDriver driver)
         {
             SetupHeadRig(driver);
+            SetupSpineRig(driver);
             //  SetupTwistBoneSpine(driver);
             //  SetupRightShoulderRig(driver);
             //  SetupLeftShoulderRig(driver);
@@ -403,8 +433,8 @@ namespace Basis.Scripts.Drivers
                 if (References.Haschest)
                 {
                     BasisAnimationRiggingHelper.CreateSlinkySpine(this, driver, HeadRig, References.chest, References.neck, References.head, BasisBoneTrackedRole.Head, BasisBoneTrackedRole.Neck, BasisBoneTrackedRole.Chest, BasisBoneTrackedRole.Chest, true, out HeadTwoBoneIK, true, true);
-                }
-                else
+				}
+				else
                 {
                     BasisAnimationRiggingHelper.CreateSlinkySpine(this, driver, HeadRig, null, References.neck, References.head, BasisBoneTrackedRole.Head, BasisBoneTrackedRole.Neck, BasisBoneTrackedRole.Chest, BasisBoneTrackedRole.Chest, true, out HeadTwoBoneIK, true, true);
                 }
@@ -418,7 +448,31 @@ namespace Basis.Scripts.Drivers
             {
                 controls.Add(Chest);
             }
+            if( driver.FindBone(out BasisBoneControl Neck, BasisBoneTrackedRole.Neck))
+            {
+                controls.Add(Neck);
+            }
             WriteUpEvents(controls, RigHeadLayer);
+        }
+
+        private void SetupSpineRig(BasisLocalBoneDriver driver)
+        {
+			GameObject SpineRig = CreateOrGetRig("Hips, Spine, Chest", true, out RigSpineRig, out RigSpineLayer);
+			if (References.HasUpperchest)
+            {
+                //TODO: Something
+            }
+            else
+            {
+                if (References.Haschest)
+                {
+					BasisAnimationRiggingHelper.CreateSlinkySpineHip(this, driver, SpineRig, References.Hips, References.spine, References.chest, BasisBoneTrackedRole.Chest, BasisBoneTrackedRole.Spine, BasisBoneTrackedRole.Hips, BasisBoneTrackedRole.Hips, true, out ChestTwoBoneIK, true, true);
+				}
+				else
+                {
+                    //TODO: More things
+                }
+            }
         }
 
         /// <summary>
