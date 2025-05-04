@@ -67,11 +67,11 @@ namespace Basis.Scripts.Drivers
             OnHeightChanged();
             if (HasEvents == false)
             {
-                MicrophoneRecorder.OnPausedAction += OnPausedEvent;
-                MicrophoneRecorder.MainThreadOnHasAudio += MicrophoneTransmitting;
-                MicrophoneRecorder.MainThreadOnHasSilence += MicrophoneNotTransmitting;
+                BasisMicrophoneRecorder.OnPausedAction += OnPausedEvent;
+                BasisMicrophoneRecorder.MainThreadOnHasAudio += MicrophoneTransmitting;
+                BasisMicrophoneRecorder.MainThreadOnHasSilence += MicrophoneNotTransmitting;
                 RenderPipelineManager.beginCameraRendering += BeginCameraRendering;
-                BasisDeviceManagement.Instance.OnBootModeChanged += OnModeSwitch;
+                BasisDeviceManagement.OnBootModeChanged += OnModeSwitch;
                 BasisLocalPlayer.Instance.OnPlayersHeightChanged += OnHeightChanged;
                 InstanceExists?.Invoke();
                 HasEvents = true;
@@ -80,7 +80,7 @@ namespace Basis.Scripts.Drivers
             StartingScale = SpriteRendererIcon.transform.localScale;
             // Target scale for the "bounce" effect (e.g., 1.2 times larger)
             largerScale = StartingScale * 1.2f;
-            UpdateMicrophoneVisuals(MicrophoneRecorder.isPaused, false);
+            UpdateMicrophoneVisuals(BasisMicrophoneRecorder.isPaused, false);
 
             if (SteamAudioListener != null)
             {
@@ -188,9 +188,9 @@ namespace Basis.Scripts.Drivers
         public void OnDestroy()
         {
             RenderPipelineManager.beginCameraRendering -= BeginCameraRendering;
-            BasisDeviceManagement.Instance.OnBootModeChanged -= OnModeSwitch;
+            BasisDeviceManagement.OnBootModeChanged -= OnModeSwitch;
             BasisLocalPlayer.Instance.OnPlayersHeightChanged -= OnHeightChanged;
-            MicrophoneRecorder.OnPausedAction -= OnPausedEvent;
+            BasisMicrophoneRecorder.OnPausedAction -= OnPausedEvent;
             HasEvents = false;
             HasInstance = false;
         }
@@ -284,9 +284,9 @@ namespace Basis.Scripts.Drivers
             if (HasEvents)
             {
                 RenderPipelineManager.beginCameraRendering -= BeginCameraRendering;
-                BasisDeviceManagement.Instance.OnBootModeChanged -= OnModeSwitch;
-                MicrophoneRecorder.MainThreadOnHasAudio -= MicrophoneTransmitting;
-                MicrophoneRecorder.MainThreadOnHasSilence -= MicrophoneNotTransmitting;
+                BasisDeviceManagement.OnBootModeChanged -= OnModeSwitch;
+                BasisMicrophoneRecorder.MainThreadOnHasAudio -= MicrophoneTransmitting;
+                BasisMicrophoneRecorder.MainThreadOnHasSilence -= MicrophoneNotTransmitting;
                 HasEvents = false;
             }
         }
@@ -298,7 +298,7 @@ namespace Basis.Scripts.Drivers
                 if (Camera.GetInstanceID() == CameraInstanceID)
                 {
                     transform.GetPositionAndRotation(out Position,out Rotation);
-                    ScaleheadToZero();
+                    BasisLocalAvatarDriver.ScaleheadToZero();
                     if (CameraData.allowXRRendering)
                     {
                         Vector2 EyeTextureSize = new Vector2(XRSettings.eyeTextureWidth, XRSettings.eyeTextureHeight);
@@ -313,25 +313,8 @@ namespace Basis.Scripts.Drivers
                 }
                 else
                 {
-                    ScaleHeadToNormal();
+                    BasisLocalAvatarDriver.ScaleHeadToNormal();
                 }
-            }
-        }
-        public bool IsNormalHead;
-        public void ScaleHeadToNormal()
-        {
-            if (IsNormalHead == false)
-            {
-                LocalPlayer.LocalAvatarDriver.References.head.localScale = BasisLocalAvatarDriver.HeadScale;
-                IsNormalHead = true;
-            }
-        }
-        public void ScaleheadToZero()
-        {
-            if (IsNormalHead)
-            {
-                LocalPlayer.LocalAvatarDriver.References.head.localScale = BasisLocalAvatarDriver.HeadScaledDown;
-                IsNormalHead = false;
             }
         }
         // Function to calculate the position

@@ -34,7 +34,7 @@ public class BasisIndividualPlayerSettings : BasisUIBase
 
     public static async void OpenPlayerSettings(BasisRemotePlayer RemotePlayer)
     {
-        BasisUIManagement.Instance.CloseAllMenus();
+        BasisUIManagement.CloseAllMenus();
         AddressableGenericResource resource = new AddressableGenericResource(Path, AddressableExpectedResult.SingleItem);
         BasisUIBase Base = OpenMenuNow(resource);
         BasisIndividualPlayerSettings PlayerSettings = (BasisIndividualPlayerSettings)Base;
@@ -76,7 +76,7 @@ public class BasisIndividualPlayerSettings : BasisUIBase
         AvatarVisibleText.text = settings.AvatarVisible ? "Hide Avatar" : "Show Avatar";
         if (RemotePlayer != null)
         {
-            RemotePlayer.CreateAvatar(RemotePlayer.AlwaysRequestedMode, RemotePlayer.AlwaysRequestedAvatar);
+            RemotePlayer.ReloadAvatar();
         }
     }
     public async void ChangePlayersVolume(string playerUUID, float volume)

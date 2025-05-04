@@ -6,11 +6,11 @@
     <td><div align="center"><h3><strong>Basis</strong></h3>
 The Social VR Framework</br>
 <a href="https://discord.gg/F35u3cUMqt"><strong>Join our Discord!»</strong></a></br></br>
-<a href="https://github.com/BasisVR/Basis/issues/new?labels=bug&template=bug-report---.md">Report Bug</a> - 
+<a href="https://github.com/BasisVR/Basis/issues/new?labels=bug&template=bug-report---.md">Report Bug</a> -
 <a href="https://github.com/BasisVR/Basis/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a></div></td>
  </tr>
 </table>
-     
+
  ## About Basis
 
 [Basis Philosophy](./PHILOSOPHY.md) <- read our Philosophy here!
@@ -32,7 +32,7 @@ Not sure how to contribute but still wanting to help out? Consider donating! We 
 
 <noscript><a href="https://liberapay.com/dooly/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript> [Github Sponsor](https://github.com/sponsors/dooly123)</br>[KoFi](https://ko-fi.com/dooly)</br>
 
-Please help shape the future of Basis and leave your mark on its foundation. 
+Please help shape the future of Basis and leave your mark on its foundation.
 
  #### Creating a Fork
 
@@ -43,7 +43,7 @@ Please help shape the future of Basis and leave your mark on its foundation.
 5. Open a Pull Request
 
  ## Installation
- 
+
 This project is currently using Unity 6 (6000.0.44f1)
 Other Unity versions may work but will require changes and adaptations.
 Currently, OPENXR and SteamVR are supported as well as OPENXR Quest.
@@ -113,3 +113,9 @@ For more details, see `Basis/Packages/com.steam.steamvr/LICENSE`.
 This project also includes third-party trademarks as described in `Basis/Packages/com.steam.steamaudio/TRADEMARK_RIGHTS.md`. For more details, see `Basis/Packages/com.steam.steamaudio/TRADEMARK_RIGHTS.md`.
 
 "Valve", "Steam", and the associated figurative images are trademarks and/or registered trademarks of Valve Corporation in the US and in various other jurisdictions. All rights reserved. Use of these trademarks must comply with the guidelines set forth in `Basis/Packages/com.steam.steamaudio/TRADEMARK_RIGHTS.md`.
+
+## Basis Trademark Guidelines
+
+"Basis", "BasisVR", "Basis Framework", and the Basis logo are marks representing the
+Basis Project. Please see [TRADEMARK.md](./TRADEMARK.md) for our policies our policies
+on their usage.

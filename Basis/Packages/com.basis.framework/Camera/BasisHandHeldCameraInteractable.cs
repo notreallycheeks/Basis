@@ -72,23 +72,23 @@ public abstract class BasisHandHeldCameraInteractable : InteractableObject
 
     public override bool CanHover(BasisInput input)
     {
-        return !DisableInteract &&
+        return !DisableInfluence &&
             !IsPuppeted &&
             Inputs.IsInputAdded(input) &&
             input.TryGetRole(out BasisBoneTrackedRole role) &&
             Inputs.TryGetByRole(role, out BasisInputWrapper found) &&
             found.GetState() == InteractInputState.Ignored &&
-            IsWithinRange(input.transform.position);
+            IsWithinRange(found.BoneControl.OutgoingWorldData.position);
     }
     public override bool CanInteract(BasisInput input)
     {
-        return !DisableInteract &&
+        return !DisableInfluence &&
             !IsPuppeted &&
             Inputs.IsInputAdded(input) &&
             input.TryGetRole(out BasisBoneTrackedRole role) &&
             Inputs.TryGetByRole(role, out BasisInputWrapper found) &&
             found.GetState() == InteractInputState.Hovering &&
-            IsWithinRange(input.transform.position);
+            IsWithinRange(found.BoneControl.OutgoingWorldData.position);
     }
 
     public override void OnHoverStart(BasisInput input)
@@ -125,13 +125,16 @@ public abstract class BasisHandHeldCameraInteractable : InteractableObject
         {
             if (wrapper.GetState() == InteractInputState.Hovering)
             {
+                Vector3 inPos = wrapper.BoneControl.OutgoingWorldData.position;
+                Quaternion inRot = wrapper.BoneControl.OutgoingWorldData.rotation;
+
                 Inputs.ChangeStateByRole(wrapper.Role, InteractInputState.Interacting);
                 RequiresUpdateLoop = true;
 
                 transform.GetPositionAndRotation(out Vector3 restPos, out Quaternion restRot);
                 InputConstraint.SetRestPositionAndRotation(restPos, restRot);
-                var offsetPos = Quaternion.Inverse(input.transform.rotation) * (transform.position - input.transform.position);
-                var offsetRot = Quaternion.Inverse(input.transform.rotation) * transform.rotation;
+                var offsetPos = Quaternion.Inverse(inRot) * (transform.position - inPos);
+                var offsetRot = Quaternion.Inverse(inRot) * transform.rotation;
                 InputConstraint.SetOffsetPositionAndRotation(0, offsetPos, offsetRot);
                 InputConstraint.Enabled = true;
 
@@ -172,22 +175,83 @@ public abstract class BasisHandHeldCameraInteractable : InteractableObject
     public override void InputUpdate()
     {
         var interactingInput = GetActiveInteracting();
-        if (interactingInput != null)
+        if (interactingInput == null) return;
+
+        var inputWrapper = interactingInput.Value;
+
+        if (inputWrapper.BoneControl == null)
         {
-            Vector3 inPos = interactingInput.Value.BoneControl.OutgoingWorldData.position;
-            Quaternion inRot = interactingInput.Value.BoneControl.OutgoingWorldData.rotation;
-            if (Basis.Scripts.Device_Management.BasisDeviceManagement.IsUserInDesktop())
+            Debug.LogWarning("BoneControl is null in interactingInput. Skipping InputUpdate.");
+            return;
+        }
+
+        Vector3 inPos;
+        Quaternion inRot;
+
+        if (Basis.Scripts.Device_Management.BasisDeviceManagement.IsUserInDesktop())
+        {
+            if (BasisLocalCameraDriver.Instance != null && BasisLocalCameraDriver.Instance.Camera != null)
             {
                 BasisLocalCameraDriver.Instance.Camera.transform.GetPositionAndRotation(out inPos, out inRot);
-
                 PollDesktopManipulation(Inputs.desktopCenterEye.Source);
             }
-
-            InputConstraint.UpdateSourcePositionAndRotation(0, inPos, inRot);
-            if (InputConstraint.Evaluate(out Vector3 pos, out Quaternion rot))
+            else
             {
-                this.transform.SetPositionAndRotation(pos, rot);
+                Debug.LogWarning("BasisLocalCameraDriver or its Camera is null.");
+                return;
             }
+        }
+        else
+        {
+            inPos = inputWrapper.BoneControl.OutgoingWorldData.position;
+            inRot = inputWrapper.BoneControl.OutgoingWorldData.rotation;
+        }
+
+        if (InputConstraint == null)
+        {
+            Debug.LogWarning("InputConstraint is null in InputUpdate.");
+            return;
+        }
+
+        InputConstraint.UpdateSourcePositionAndRotation(0, inPos, inRot);
+        // NOTE: Removed transform.SetPositionAndRotation here to avoid UI lag
+    }
+
+    private void LateUpdate()
+    {
+        if (!RequiresUpdateLoop)
+            return;
+
+        var interactingInput = GetActiveInteracting();
+        if (interactingInput == null || interactingInput.Value.BoneControl == null)
+            return;
+
+        Vector3 inPos;
+        Quaternion inRot;
+
+        if (Basis.Scripts.Device_Management.BasisDeviceManagement.IsUserInDesktop())
+        {
+            if (BasisLocalCameraDriver.Instance != null && BasisLocalCameraDriver.Instance.Camera != null)
+            {
+                BasisLocalCameraDriver.Instance.Camera.transform.GetPositionAndRotation(out inPos, out inRot);
+                PollDesktopManipulation(Inputs.desktopCenterEye.Source);
+            }
+            else return;
+        }
+        else
+        {
+            inPos = interactingInput.Value.BoneControl.OutgoingWorldData.position;
+            inRot = interactingInput.Value.BoneControl.OutgoingWorldData.rotation;
+        }
+
+        if (InputConstraint == null)
+            return;
+
+        InputConstraint.UpdateSourcePositionAndRotation(0, inPos, inRot);
+
+        if (InputConstraint.Evaluate(out Vector3 pos, out Quaternion rot))
+        {
+            transform.SetPositionAndRotation(pos, rot);
         }
     }
 

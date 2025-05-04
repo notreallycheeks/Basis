@@ -6,17 +6,23 @@ using System.Collections;
 using Basis.Scripts.BasisSdk.Players;
 using Basis.Scripts.Drivers;
 using UnityEngine.Rendering;
+using TMPro;
+using UnityEngine.XR;
+using Basis.Scripts.Device_Management;
+
 public class BasisHandHeldCamera : BasisHandHeldCameraInteractable
 {
     public UniversalAdditionalCameraData CameraData;
     public Camera captureCamera;
     public RenderTexture renderTexture;
-
+    public TextMeshProUGUI countdownText;
     public int captureWidth = 3840;
     public int captureHeight = 2160;
 
     public int PreviewCaptureWidth = 1920;
     public int PreviewCaptureHeight = 1080;
+
+    private bool showUI = false;
 
     public BasisMeshRendererCheck BasisMeshRendererCheck;
     public MeshRenderer Renderer;
@@ -26,6 +32,8 @@ public class BasisHandHeldCamera : BasisHandHeldCameraInteractable
     public string picturesFolder;
     public int InstanceID;
     public int depth = 24;
+
+    public bool enableRecordingView;
 
     [SerializeField]
     public BasisHandHeldCameraUI HandHeld = new BasisHandHeldCameraUI();
@@ -68,7 +76,14 @@ public class BasisHandHeldCamera : BasisHandHeldCameraInteractable
         await HandHeld.SaveSettings();
         base.Awake();
         captureCamera.gameObject.SetActive(true);
+        BasisDeviceManagement.OnBootModeChanged += OnBootModeChanged;
     }
+
+    private void OnBootModeChanged(string obj)
+    {
+        OverrideDesktopOutput();
+    }
+
     public new void OnDestroy()
     {
         if (BasisMeshRendererCheck != null)
@@ -79,9 +94,109 @@ public class BasisHandHeldCamera : BasisHandHeldCameraInteractable
         {
             renderTexture.Release();
         }
+        BasisDeviceManagement.OnBootModeChanged -= OnBootModeChanged;
         base.OnDestroy();
     }
+    public void Timer()
+    {
+        StartCoroutine(DelayedAction(5)); // Countdown from 5 seconds
+    }
+    private IEnumerator DelayedAction(float delaySeconds)
+    {
+        for (int i = (int)delaySeconds; i > 0; i--)
+        {
+            countdownText.text = i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
 
+        // Flash "!" before capture
+        countdownText.text = "!";
+        yield return new WaitForSeconds(0.5f);
+
+        // Prepare format
+        TextureFormat Format;
+        RenderTextureFormat RenderFormat;
+
+        if (captureFormat == "EXR")
+        {
+            Format = TextureFormat.RGBAFloat;
+            RenderFormat = RenderTextureFormat.ARGBFloat;
+        }
+        else
+        {
+            Format = TextureFormat.RGBA32;
+            RenderFormat = RenderTextureFormat.ARGB32;
+        }
+
+        StartCoroutine(TakeScreenshot(Format, RenderFormat));
+
+        // Reset the countdown text back to "5" after triggering
+        countdownText.text = ((int)delaySeconds).ToString();
+    }
+    public void OverrideDesktopOutput()
+    {
+        if (enableRecordingView && BasisDeviceManagement.IsUserInDesktop() == false)
+        {
+            captureCamera.targetTexture = null;
+            captureCamera.depth = 1;
+            captureCamera.targetDisplay = 0;
+            FillRenderTextureWithColor(renderTexture, Color.black);
+        }
+        else
+        {
+            captureCamera.depth = -1;
+            captureCamera.targetDisplay = 1;
+            captureCamera.targetTexture = renderTexture;
+        }
+    }
+    public void OnOverrideDesktopOutputButtonPress()
+    {
+        enableRecordingView = !enableRecordingView;
+        OverrideDesktopOutput();
+    }
+    void FillRenderTextureWithColor(RenderTexture rt, Color color)
+    {
+        // Save current active RenderTexture
+        RenderTexture previous = RenderTexture.active;
+
+        // Set our target as the active RenderTexture
+        RenderTexture.active = rt;
+
+        // Set up viewport and projection
+        GL.PushMatrix();
+        GL.LoadPixelMatrix(0, rt.width, rt.height, 0);
+
+        // Clear with the target color
+        GL.Clear(true, true, color);
+
+        // Clean up
+        GL.PopMatrix();
+
+        // Restore previous RT
+        RenderTexture.active = previous;
+    }
+    public void Nameplates()
+    {
+        int uiLayer = LayerMask.NameToLayer("UI");
+        if (uiLayer < 0)
+        {
+            Debug.LogWarning("UI Layer not found.");
+            return;
+        }
+
+        int uiLayerMask = 1 << uiLayer;
+
+        showUI = !showUI;
+
+        if (showUI)
+        {
+            captureCamera.cullingMask |= uiLayerMask; // Enable UI layer
+        }
+        else
+        {
+            captureCamera.cullingMask &= ~uiLayerMask; // Disable UI layer
+        }
+    }
     public void CapturePhoto()
     {
         TextureFormat Format;
@@ -143,7 +258,7 @@ public class BasisHandHeldCamera : BasisHandHeldCameraInteractable
     {
         SetResolution(captureWidth, captureHeight, AntialiasingQuality.High, Format);
         yield return new WaitForEndOfFrame();
-        BasisLocalCameraDriver.Instance.ScaleHeadToNormal();
+        BasisLocalAvatarDriver.ScaleHeadToNormal();
         ToggleToneMapping(TonemappingMode.ACES);
         captureCamera.Render();
         yield return new WaitForEndOfFrame();
@@ -169,7 +284,7 @@ public class BasisHandHeldCamera : BasisHandHeldCameraInteractable
     public void SetNormalAfterCapture()
     {
         ToggleToneMapping(TonemappingMode.Neutral);
-        BasisLocalCameraDriver.Instance.ScaleheadToZero();
+        BasisLocalAvatarDriver.ScaleheadToZero();
         SetResolution(PreviewCaptureWidth, PreviewCaptureHeight, AntialiasingQuality.Low);
     }
     public async void SaveScreenshotAsync(Texture2D screenshot)

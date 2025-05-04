@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Basis.Scripts.Drivers.BaseBoneDriver;
+using static Basis.Scripts.Drivers.BasisBaseBoneDriver;
 namespace Basis.Scripts.BasisSdk.Players
 {
     public class BasisLocalPlayer : BasisPlayer
@@ -49,9 +49,8 @@ namespace Basis.Scripts.BasisSdk.Players
         public Action OnPlayersHeightChanged;
         public OrderedDelegate AfterFinalMove = new OrderedDelegate();
 
-        public LocalHeightInformation CurrentHeight = new LocalHeightInformation();
-        public LocalHeightInformation LastHeight= new LocalHeightInformation();
-        public MicrophoneRecorder MicrophoneRecorder;
+        public BasisLocalHeightInformation CurrentHeight = new BasisLocalHeightInformation();
+        public BasisLocalHeightInformation LastHeight= new BasisLocalHeightInformation();
         public BasisLocalCameraDriver CameraDriver;
         //bones that we use to map between avatar and trackers
         [Header("Bone Driver")]
@@ -64,7 +63,7 @@ namespace Basis.Scripts.BasisSdk.Players
         //how the player is able to move and have physics applied to them
         [Header("Character Driver")]
         [SerializeField]
-        public LocalCharacterDriver LocalCharacterDriver = new LocalCharacterDriver();
+        public BasisLocalCharacterDriver LocalCharacterDriver = new BasisLocalCharacterDriver();
         //Animations
         [Header("Animator Driver")]
         [SerializeField]
@@ -73,10 +72,10 @@ namespace Basis.Scripts.BasisSdk.Players
         [Header("Muscle Driver")]
         [SerializeField]
         public BasisMuscleDriver LocalMuscleDriver = new BasisMuscleDriver();
-        [Header("Eye Follow")]
+        [Header("Eye Driver")]
         [SerializeField]
-        public BasisLocalEyeFollowBase LocalEyeFollow = new BasisLocalEyeFollowBase();
-        [Header("Mouth Visemes")]
+        public BasisLocalEyeDriver BasisLocalEyeDriver = new BasisLocalEyeDriver();
+        [Header("Mouth & Visemes Driver")]
         [SerializeField]
         public BasisAudioAndVisemeDriver LocalVisemeDriver = new BasisAudioAndVisemeDriver();
         public async Task LocalInitialize()
@@ -85,7 +84,7 @@ namespace Basis.Scripts.BasisSdk.Players
             {
                 Instance = this;
             }
-            MicrophoneRecorder.OnPausedAction += OnPausedEvent;
+            BasisMicrophoneRecorder.OnPausedAction += OnPausedEvent;
             OnLocalPlayerCreated?.Invoke();
             IsLocal = true;
             LocalBoneDriver.CreateInitialArrays(this.transform, true);
@@ -109,11 +108,7 @@ namespace Basis.Scripts.BasisSdk.Players
             {
                 await CreateAvatar(BasisPlayer.LoadModeLocal, BasisAvatarFactory.LoadingAvatar);
             }
-            if (MicrophoneRecorder == null)
-            {
-                MicrophoneRecorder = BasisHelpers.GetOrAddComponent<MicrophoneRecorder>(BasisDeviceManagement.Instance.gameObject);
-            }
-            MicrophoneRecorder.TryInitialize();
+            BasisMicrophoneRecorder.TryInitialize();
             PlayerReady = true;
             OnLocalPlayerCreatedAndReady?.Invoke();
             BasisSceneFactory BasisSceneFactory = FindFirstObjectByType<BasisSceneFactory>(FindObjectsInactive.Exclude);
@@ -136,9 +131,13 @@ namespace Basis.Scripts.BasisSdk.Players
             BasisUILoadingBar.Initalize();
 
         }
+        public void OnApplicationQuit()
+        {
+            BasisMicrophoneRecorder.StopProcessingThread();
+        }
         public async Task LoadInitialAvatar(BasisDataStore.BasisSavedAvatar LastUsedAvatar)
         {
-            if (BasisLoadHandler.IsMetaDataOnDisc(LastUsedAvatar.UniqueID, out OnDiscInformation info))
+            if (BasisLoadHandler.IsMetaDataOnDisc(LastUsedAvatar.UniqueID, out BasisOnDiscInformation info))
             {
                 await BasisDataStoreAvatarKeys.LoadKeys();
                 List<BasisDataStoreAvatarKeys.AvatarKey> activeKeys = BasisDataStoreAvatarKeys.DisplayKeys();
@@ -200,8 +199,8 @@ namespace Basis.Scripts.BasisSdk.Players
             LocalVisemeDriver.TryInitialize(this);
             if (HasCalibrationEvents == false)
             {
-                MicrophoneRecorderBase.OnHasAudio += DriveAudioToViseme;
-                MicrophoneRecorderBase.OnHasSilence += DriveAudioToViseme;
+                BasisMicrophoneRecorder.OnHasAudio += DriveAudioToViseme;
+                BasisMicrophoneRecorder.OnHasSilence += DriveAudioToViseme;
                 HasCalibrationEvents = true;
             }
         }
@@ -215,30 +214,30 @@ namespace Basis.Scripts.BasisSdk.Players
             }
             if (HasCalibrationEvents)
             {
-                MicrophoneRecorderBase.OnHasAudio -= DriveAudioToViseme;
-                MicrophoneRecorderBase.OnHasSilence -= DriveAudioToViseme;
+                BasisMicrophoneRecorder.OnHasAudio -= DriveAudioToViseme;
+                BasisMicrophoneRecorder.OnHasSilence -= DriveAudioToViseme;
                 HasCalibrationEvents = false;
             }
             if (LocalMuscleDriver != null)
             {
                 LocalMuscleDriver.DisposeAllJobsData();
             }
-            if (LocalEyeFollow != null)
+            if (BasisLocalEyeDriver != null)
             {
-                LocalEyeFollow.OnDestroy(this);
+                BasisLocalEyeDriver.OnDestroy(this);
             }
             if (FacialBlinkDriver != null)
             {
                 FacialBlinkDriver.OnDestroy();
             }
-            MicrophoneRecorder.OnPausedAction -= OnPausedEvent;
+            BasisMicrophoneRecorder.OnPausedAction -= OnPausedEvent;
             LocalAnimatorDriver.OnDestroy(this);
             LocalBoneDriver.DeInitializeGizmos();
             BasisUILoadingBar.DeInitalize();
         }
         public void DriveAudioToViseme()
         {
-            LocalVisemeDriver.ProcessAudioSamples(MicrophoneRecorder.processBufferArray, 1, MicrophoneRecorder.processBufferArray.Length);
+            LocalVisemeDriver.ProcessAudioSamples(BasisMicrophoneRecorder.processBufferArray, 1, BasisMicrophoneRecorder.processBufferArray.Length);
         }
         private void OnPausedEvent(bool IsPaused)
         {

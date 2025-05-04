@@ -30,8 +30,9 @@ namespace Basis.Scripts.Drivers
             LinkedPlayer = Player;
             blendShapeIndex.Clear();
             meshRenderer = Avatar.FaceBlinkMesh;
-            foreach (int Blink in Avatar.BlinkViseme)
+            for (int Index = 0; Index < Avatar.BlinkViseme.Length; Index++)
             {
+                int Blink = Avatar.BlinkViseme[Index];
                 if (Blink != -1)
                 {
                     blendShapeIndex.Add(Blink);
@@ -42,12 +43,19 @@ namespace Basis.Scripts.Drivers
             SetNextBlinkTime();
             if (LinkedPlayer != null && LinkedPlayer.FaceRenderer != null)
             {
-                BasisDebug.Log("Wired up Renderer Check For Blinking", BasisDebug.LogTag.Avatar);
+               // BasisDebug.Log("Wired up Renderer Check For Blinking", BasisDebug.LogTag.Avatar);
                 LinkedPlayer.FaceRenderer.Check += UpdateFaceVisibility;
                 UpdateFaceVisibility(LinkedPlayer.FaceIsVisible);
             }
-            IsEnabled = true;
-        }
+            if (meshRenderer == null)
+            {
+                IsEnabled = false;
+            }
+            else
+            {
+                IsEnabled = true;
+            }
+         }
         public void OnDestroy()
         {
             if (LinkedPlayer != null && LinkedPlayer.FaceRenderer != null)
@@ -82,12 +90,20 @@ namespace Basis.Scripts.Drivers
         }
         public void Simulate()
         {
-            if (IsEnabled)
+            if (IsEnabled && meshRenderer != null)
             {
                 float CurrentTIme = Time.time;
                 if (!isBlinking && CurrentTIme >= nextBlinkTime)
                 {
-                    StartBlink();
+                    isBlinking = true;
+                    blinkStartTime = Time.time;
+                    // Trigger viseme animation for closing
+                    for (int Index = 0; Index < blendShapeCount; Index++)
+                    {
+                        meshRenderer.SetBlendShapeWeight(blendShapeIndex[Index], 0);
+                    }
+                    isVisemeClosing = true;
+                    visemeStartTime = Time.time;
                 }
                 else if (isBlinking)
                 {
@@ -99,7 +115,8 @@ namespace Basis.Scripts.Drivers
                     }
                     if (Time >= 1f)
                     {
-                        FinishBlink();
+                        isBlinking = false;
+                        SetNextBlinkTime(); // Set next blink time after eyes open
                     }
                 }
                 else if (isVisemeClosing)
@@ -121,25 +138,6 @@ namespace Basis.Scripts.Drivers
         public void SetNextBlinkTime()
         {
             nextBlinkTime = Time.time + UnityEngine.Random.Range(minBlinkInterval, maxBlinkInterval);
-        }
-
-        public void StartBlink()
-        {
-            isBlinking = true;
-            blinkStartTime = Time.time;
-            // Trigger viseme animation for closing
-            for (int Index = 0; Index < blendShapeCount; Index++)
-            {
-                meshRenderer.SetBlendShapeWeight(blendShapeIndex[Index], 0);
-            }
-            isVisemeClosing = true;
-            visemeStartTime = Time.time;
-        }
-
-        public void FinishBlink()
-        {
-            isBlinking = false;
-            SetNextBlinkTime(); // Set next blink time after eyes open
         }
     }
 }

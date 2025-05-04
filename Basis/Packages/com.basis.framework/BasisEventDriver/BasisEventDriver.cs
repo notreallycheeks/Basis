@@ -43,15 +43,15 @@ public class BasisEventDriver : MonoBehaviour
 
     public void LateUpdate()
     {
-        if (BasisLocalEyeFollowBase.RequiresUpdate())
+        if (BasisLocalEyeDriver.RequiresUpdate())
         {
-            BasisLocalEyeFollowBase.Instance.Simulate();
+            BasisLocalEyeDriver.Instance.Simulate();
         }
         if (BasisLocalPlayer.PlayerReady)
         {
             BasisLocalPlayer.Instance.SimulateOnLateUpdate();
         }
-        MicrophoneRecorder.MicrophoneUpdate();
+        BasisMicrophoneRecorder.MicrophoneUpdate();
         RemoteNamePlateDriver.SimulateNamePlates();
         BasisNetworkManagement.SimulateNetworkApply();
     }
