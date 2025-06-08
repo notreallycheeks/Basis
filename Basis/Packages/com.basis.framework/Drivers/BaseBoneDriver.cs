@@ -9,7 +9,7 @@ using Unity.Mathematics;
 using UnityEngine;
 namespace Basis.Scripts.Drivers
 {
-    [System.Serializable]
+    [Serializable]
     public abstract class BaseBoneDriver
     {
         //figures out how to get the mouth bone and eye position
@@ -252,6 +252,7 @@ namespace Basis.Scripts.Drivers
         }
         public static float DefaultGizmoSize = 0.05f;
         public static float HandGizmoSize = 0.015f;
+
         public void DrawGizmos(BasisBoneControl Control)
 		{
             if (!Control.HasBone) return;

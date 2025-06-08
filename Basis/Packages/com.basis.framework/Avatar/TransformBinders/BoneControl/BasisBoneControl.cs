@@ -116,6 +116,7 @@ namespace Basis.Scripts.TransformBinders.BoneControl
                 LastRunData.rotation = OutGoingData.rotation;
             }
         }
+
         [BurstCompile]
         public Quaternion ApplyLerpToQuaternion(float DeltaTime, Quaternion CurrentRotation, Quaternion FutureRotation)
         {
@@ -153,6 +154,7 @@ namespace Basis.Scripts.TransformBinders.BoneControl
             // Perform spherical interpolation (slerp) with the optimized factor
             return math.slerp(CurrentRotation, FutureRotation, lerpFactor);
         }
+
         [BurstCompile]
         private float ClampInterpolationFactor(float lerpAmount, float DeltaTime)
         {

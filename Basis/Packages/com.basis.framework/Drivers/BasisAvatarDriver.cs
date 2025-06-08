@@ -323,6 +323,7 @@ namespace Basis.Scripts.Drivers
 			}
 			BaseBoneDriver.CreateRotationalLock(AssignedToAddToBone, LockToBone, PositionLerpAmount, QuaternionLerpAmount);
 		}
+
 		public int SkinnedMeshRendererLength;
         public void FindSkinnedMeshRenders()
         {
