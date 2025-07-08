@@ -20,7 +20,7 @@ public static class BasisAnimationRiggingHelper
         BasisApplyTranslation DT = BasisHelpers.GetOrAddComponent<BasisApplyTranslation>(DTData);
 
         DT.data.constrainedObject = Source;
-        GeneratedRequiredTransforms(player, Source);
+        GenerateRequiredTransforms(player, Source);
         WriteUpWeights(Target, DT);
         return DT;
     }
@@ -40,20 +40,74 @@ public static class BasisAnimationRiggingHelper
         DT.data.root = null;
         DT.data.tipTarget = tip;
         DT.data.rootTarget = root;
-        //GeneratedRequiredTransforms(root, References.Hips);
     }
 
-    public static void CreateTwoBone(BasisLocalPlayer player, GameObject Parent, Transform root, Transform mid, Transform tip, BasisBoneTrackedRole TargetRole, BasisBoneTrackedRole BendRole, bool UseBoneRole, out BasisTwoBoneIKConstraint TwoBoneIKConstraint, bool maintainTargetPositionOffset, bool maintainTargetRotationOffset)
+	public static void CreateSpine(BasisLocalPlayer player, GameObject parent, Transform hips, Transform[] spineJoints, Transform head, BasisBoneTrackedRole hipRole, out BasisSpineIKConstraint SpineIKConstraint, Vector3[] spineCurvature, float chainWeight = 1.0f, bool maintainSpineLength = true)
+	{
+		player.LocalBoneDriver.FindBone(out BasisLocalBoneControl hipControl, hipRole);
+
+		var boneRole = CreateAndSetParent(parent.transform, $"Bone Role {hipRole.ToString()}");
+		SpineIKConstraint = BasisHelpers.GetOrAddComponent<BasisSpineIKConstraint>(boneRole);
+
+		// Set the transform references FIRST
+		SpineIKConstraint.data.hips = hips;
+		SpineIKConstraint.data.spineJoints = spineJoints;
+		SpineIKConstraint.data.head = head;
+
+		// Set control parameters
+		SpineIKConstraint.data.chainWeight = chainWeight;
+		SpineIKConstraint.data.maintainSpineLength = maintainSpineLength;
+
+		// Initialize curvature array properly
+		if (spineCurvature == null || spineCurvature.Length != spineJoints.Length)
+		{
+			spineCurvature = new Vector3[spineJoints.Length];
+		}
+		SpineIKConstraint.data.SpineCurvature = spineCurvature;
+
+		// IMPORTANT: Manually calibrate the original distances after setting transforms
+		CalibrateSpineDistances(ref SpineIKConstraint.data, hips, spineJoints);
+
+		// Set target to head position/rotation
+		SpineIKConstraint.data.headTargetPosition = head.position;
+		SpineIKConstraint.data.headTargetRotation = head.rotation.eulerAngles;
+
+		GenerateRequiredTransforms(player, head);
+	}
+
+	// Helper method to manually calibrate distances
+	private static void CalibrateSpineDistances(ref BasisSpineIKConstraintData data, Transform hips, Transform[] spineJoints)
+	{
+		if (spineJoints == null || spineJoints.Length == 0) return;
+
+		int jointCount = spineJoints.Length + 1; // Include hips
+		data.m_OriginalDistances = new Vector3[jointCount];
+
+		// Store original distances between consecutive joints
+		data.m_OriginalDistances[0] = Vector3.zero; // Hips has no previous joint
+
+		Transform prev = hips;
+		for (int i = 0; i < spineJoints.Length; i++)
+		{
+			if (spineJoints[i] != null)
+			{
+				Vector3 offset = spineJoints[i].position - prev.position;
+				data.m_OriginalDistances[i + 1] = offset;
+				prev = spineJoints[i];
+			}
+		}
+	}
+
+	public static void CreateTwoBone(BasisLocalPlayer player, GameObject Parent, Transform root, Transform mid, Transform tip, BasisBoneTrackedRole TargetRole, BasisBoneTrackedRole BendRole, bool UseBoneRole, out BasisTwoBoneIKConstraint TwoBoneIKConstraint, bool maintainTargetPositionOffset, bool maintainTargetRotationOffset)
     {
         player.LocalBoneDriver.FindBone(out BasisLocalBoneControl TargetControl, TargetRole);
-
 
         GameObject BoneRole = CreateAndSetParent(Parent.transform, $"Bone Role {TargetRole.ToString()}");
         TwoBoneIKConstraint = BasisHelpers.GetOrAddComponent<BasisTwoBoneIKConstraint>(BoneRole);
 
         Vector3 PositionOffset = new Vector3(0, 0, 0);
 
-        Quaternion RotationOffset =  tip.rotation;//Quaternion.Inverse(TargetControl.OutgoingWorldData.rotation) *
+        Quaternion RotationOffset =  tip.rotation;
         EnableTwoBoneIk(TwoBoneIKConstraint, PositionOffset, RotationOffset.eulerAngles);
         Quaternion Rotation = TargetControl.OutgoingWorldData.rotation;
         TwoBoneIKConstraint.data.TargetPosition = TargetControl.OutgoingWorldData.position;
@@ -70,7 +124,7 @@ public static class BasisAnimationRiggingHelper
         TwoBoneIKConstraint.data.root = root;
         TwoBoneIKConstraint.data.mid = mid;
         TwoBoneIKConstraint.data.tip = tip;
-        GeneratedRequiredTransforms(player, tip);
+        GenerateRequiredTransforms(player, tip);
     }
 
     public static void CreateTwoBoneHand(BasisLocalPlayer player, GameObject Parent, Transform root, Transform mid, Transform tip, BasisBoneTrackedRole TargetRole, BasisBoneTrackedRole BendRole, bool UseBoneRole, out BasisTwoBoneIKConstraintHand TwoBoneIKConstraint, bool maintainTargetPositionOffset, bool maintainTargetRotationOffset)
@@ -94,7 +148,7 @@ public static class BasisAnimationRiggingHelper
         TwoBoneIKConstraint.data.root = root;
         TwoBoneIKConstraint.data.mid = mid;
         TwoBoneIKConstraint.data.tip = tip;
-        GeneratedRequiredTransforms(player, tip);
+        GenerateRequiredTransforms(player, tip);
     }
 
     public static void WriteUpWeights(BasisLocalBoneControl Control, BasisApplyTranslation Constraint)
@@ -110,49 +164,40 @@ public static class BasisAnimationRiggingHelper
         Constraint.weight = PositionWeight;
     }
 
-    public static void GeneratedRequiredTransforms(BasisLocalPlayer player, Transform BaseLevel)
-    {
-        // Go up the hierarchy until you hit the TopLevelParent
-        if (BaseLevel != null)
-        {
-            Transform currentTransform = BaseLevel.parent;
-            while (currentTransform != null && currentTransform != player.LocalAvatarDriver.References.Hips)
-            {
-                // Add component if the current transform doesn't have it
-                if (currentTransform.TryGetComponent<RigTransform>(out RigTransform RigTransform))
-                {
-                    if (player.LocalRigDriver.AdditionalTransforms.Contains(RigTransform) == false)
-                    {
-						player.LocalRigDriver.AdditionalTransforms.Add(RigTransform);
-                    }
-                }
-                else
-                {
-                    RigTransform = currentTransform.gameObject.AddComponent<RigTransform>();
-					player.LocalRigDriver.AdditionalTransforms.Add(RigTransform);
-                }
-                // Move to the parent for the next iteration
-                currentTransform = currentTransform.parent;
-            }
-        }
-    }
+	public static void GenerateRequiredTransforms(BasisLocalPlayer player, Transform baseLevel)
+	{
+		if (baseLevel.parent == null || player.LocalRigDriver == null)
+			return;
 
-    public static GameObject CreateAndSetParent(Transform parent, string name)
-    {
-        Transform[] Children = parent.transform.GetComponentsInChildren<Transform>();
-        foreach (Transform child in Children)
-        {
-            if (child.name == $"Bone Role {name}")
-            {
-                return child.gameObject;
-            }
-        }
+		Transform hipsTransform = player.LocalAvatarDriver?.References?.Hips;
+		Transform currentTransform = baseLevel.parent;
 
-        // Create a new empty GameObject
-        GameObject newObject = new GameObject(name);
+		while (currentTransform != null && currentTransform != hipsTransform)
+		{
+			// Get or add RigTransform component
+			RigTransform rigTransform = currentTransform.GetComponent<RigTransform>()
+				?? currentTransform.gameObject.AddComponent<RigTransform>();
 
-        // Set its parent
-        newObject.transform.SetParent(parent);
-        return newObject;
-    }
+			// Add to collection if not already present
+			if (!player.LocalRigDriver.AdditionalTransforms.Contains(rigTransform))
+			{
+				player.LocalRigDriver.AdditionalTransforms.Add(rigTransform);
+			}
+
+			currentTransform = currentTransform.parent;
+		}
+	}
+
+	public static GameObject CreateAndSetParent(Transform parent, string name)
+	{
+		var boneName = $"Bone Role {name}";
+		var existingChild = parent.Find(boneName);
+
+		if (existingChild != null)
+			return existingChild.gameObject;
+
+		var newObject = new GameObject(name);
+		newObject.transform.SetParent(parent);
+		return newObject;
+	}
 }

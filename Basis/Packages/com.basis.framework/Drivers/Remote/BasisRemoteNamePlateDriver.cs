@@ -25,6 +25,7 @@ namespace Basis.Scripts.UI.NamePlate
         public Material SelectedNamePlateMaterial;
         [HideInInspector]
         public Mesh RoundedCornersMesh;
+
         public void Awake()
         {
             Instance = this;
@@ -42,6 +43,7 @@ namespace Basis.Scripts.UI.NamePlate
             // Convert Sprite to Mesh with custom width and height
             RoundedCornersMesh = GenerateRoundedQuad();
         }
+
         public void GenerateTextFactory(BasisRemotePlayer remotePlayer, BasisRemoteNamePlate namePlate)
         {
             Text.gameObject.SetActive(true);
