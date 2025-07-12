@@ -15,7 +15,7 @@ namespace Basis.Scripts.Drivers
 	[Serializable]
 	public class BasisLocalRigDriver
 	{
-		public BasisTwoBoneIKConstraint HeadTwoBoneIK;
+		//public BasisTwoBoneIKConstraint HeadTwoBoneIK;
 		public BasisSpineIKConstraint SpineIK;
 		public BasisTwoBoneIKConstraint LeftFootTwoBoneIK;
 		public BasisTwoBoneIKConstraint RightFootTwoBoneIK;
@@ -212,10 +212,9 @@ namespace Basis.Scripts.Drivers
 			var spineJoints = new[] { references.spine, references.chest, references.Upperchest, references.neck }
 				.Where(joint => joint != null)
 				.ToArray();
-		
-			var spineCurvature = spineJoints.Select(joint => joint.position).ToArray();
 
-			BasisAnimationRiggingHelper.CreateSpine(localPlayer, spineRig, references.Hips, spineJoints, references.head, BasisBoneTrackedRole.Hips, out SpineIK, spineCurvature, 1, false);
+			Debug.Log("SpineReference: " + references.Hasspine.ToString() + " ChestReference: " + references.Haschest.ToString() + " UpperchestReference: " + references.HasUpperchest.ToString() + " NeckReference: " + references.Hasneck.ToString());
+			BasisAnimationRiggingHelper.CreateSpine(localPlayer, spineRig, references.Hips, spineJoints, references.head, BasisBoneTrackedRole.Hips, out SpineIK, 1, false);
 		}
 
 		public void LeftHand(BasisLocalBoneDriver driver)
@@ -330,7 +329,7 @@ namespace Basis.Scripts.Drivers
 				{
 					case BasisBoneTrackedRole.Chest:
 						// BasisDebug.Log("Setting Hint For " + RoleWithHint + " with weight " + weight);
-						HeadTwoBoneIK.data.hintWeight = weight;
+						//HeadTwoBoneIK.data.hintWeight = weight;
 						break;
 
 					case BasisBoneTrackedRole.RightLowerLeg:

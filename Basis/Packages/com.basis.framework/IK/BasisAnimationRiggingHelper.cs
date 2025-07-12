@@ -42,7 +42,7 @@ public static class BasisAnimationRiggingHelper
         DT.data.rootTarget = root;
     }
 
-	public static void CreateSpine(BasisLocalPlayer player, GameObject parent, Transform hips, Transform[] spineJoints, Transform head, BasisBoneTrackedRole hipRole, out BasisSpineIKConstraint SpineIKConstraint, Vector3[] spineCurvature, float chainWeight = 1.0f, bool maintainSpineLength = true)
+	public static void CreateSpine(BasisLocalPlayer player, GameObject parent, Transform hips, Transform[] spineJoints, Transform head, BasisBoneTrackedRole hipRole, out BasisSpineIKConstraint SpineIKConstraint, float chainWeight = 1.0f, bool maintainSpineLength = true)
 	{
 		player.LocalBoneDriver.FindBone(out BasisLocalBoneControl hipControl, hipRole);
 
@@ -56,14 +56,7 @@ public static class BasisAnimationRiggingHelper
 
 		// Set control parameters
 		SpineIKConstraint.data.chainWeight = chainWeight;
-		SpineIKConstraint.data.maintainSpineLength = maintainSpineLength;
-
-		// Initialize curvature array properly
-		if (spineCurvature == null || spineCurvature.Length != spineJoints.Length)
-		{
-			spineCurvature = new Vector3[spineJoints.Length];
-		}
-		SpineIKConstraint.data.SpineCurvature = spineCurvature;
+        SpineIKConstraint.data.maintainSpineLength = maintainSpineLength;
 
 		// IMPORTANT: Manually calibrate the original distances after setting transforms
 		CalibrateSpineDistances(ref SpineIKConstraint.data, hips, spineJoints);
@@ -80,19 +73,17 @@ public static class BasisAnimationRiggingHelper
 	{
 		if (spineJoints == null || spineJoints.Length == 0) return;
 
-		int jointCount = spineJoints.Length + 1; // Include hips
+		int jointCount = spineJoints.Length + 1;
 		data.m_OriginalDistances = new Vector3[jointCount];
-
-		// Store original distances between consecutive joints
-		data.m_OriginalDistances[0] = Vector3.zero; // Hips has no previous joint
+		data.m_OriginalDistances[0] = Vector3.zero;
 
 		Transform prev = hips;
 		for (int i = 0; i < spineJoints.Length; i++)
 		{
 			if (spineJoints[i] != null)
 			{
-				Vector3 offset = spineJoints[i].position - prev.position;
-				data.m_OriginalDistances[i + 1] = offset;
+				float distance = Vector3.Distance(spineJoints[i].position, prev.position);
+				data.m_OriginalDistances[i + 1] = new Vector3(distance, 0, 0); // Store distance in x component
 				prev = spineJoints[i];
 			}
 		}

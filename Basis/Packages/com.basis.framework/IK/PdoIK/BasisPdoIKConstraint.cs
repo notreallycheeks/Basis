@@ -18,9 +18,6 @@ namespace UnityEngine.Animations.Rigging
 		public Vector3 headTargetRotation;
 
 		[SyncSceneToStream, SerializeField]
-		public Vector3[] SpineCurvature;
-
-		[SyncSceneToStream, SerializeField]
 		public float ChainWeight;
 
 		[SyncSceneToStream, SerializeField]
@@ -29,7 +26,6 @@ namespace UnityEngine.Animations.Rigging
 		// Interface implementation using head-specific naming
 		Vector3 BasisISpineIKConstraintData.headTargetPosition { get => headTargetPosition; }
 		Vector3 BasisISpineIKConstraintData.headTargetRotation { get => headTargetRotation; }
-		Vector3[] BasisISpineIKConstraintData.spineCurvature { get => SpineCurvature; }
 		float BasisISpineIKConstraintData.chainWeight { get => ChainWeight; }
 
 		public Transform hips { get => m_Hips; set => m_Hips = value; }
@@ -41,9 +37,8 @@ namespace UnityEngine.Animations.Rigging
 		string BasisISpineIKConstraintData.chainWeightFloatProperty => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(ChainWeight));
 		string BasisISpineIKConstraintData.headTargetPositionVector3Property => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(headTargetPosition));
 		string BasisISpineIKConstraintData.headTargetRotationVector3Property => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(headTargetRotation));
-		string BasisISpineIKConstraintData.spineCurvatureVector3Property => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(SpineCurvature));
 
-		[SyncSceneToStream, SerializeField]
+		[SerializeField]
 		public Vector3[] m_OriginalDistances;
 
 		public Vector3[] originalDistances
@@ -59,16 +54,28 @@ namespace UnityEngine.Animations.Rigging
 		{
 			if (m_SpineJoints == null || m_SpineJoints.Length == 0) return false;
 
-			// Check if spine joints form a valid chain from root to head
+			// Check distances are reasonable
 			Transform current = m_Hips;
-			foreach (var joint in m_SpineJoints)
+			for (int i = 0; i < m_SpineJoints.Length; i++)
 			{
-				if (joint == null) return false;
-				if (!joint.IsChildOf(current)) return false;
-				current = joint;
+				if (m_SpineJoints[i] == null) return false;
+
+				float distance = Vector3.Distance(current.position, m_SpineJoints[i].position);
+				if (distance > 2.0f || distance < 0.01f) // Reasonable spine segment lengths
+				{
+					Debug.LogWarning($"Unusual spine segment length: {distance}m between {current.name} and {m_SpineJoints[i].name}");
+				}
+
+				current = m_SpineJoints[i];
 			}
 
-			return m_Head.IsChildOf(current);
+			float headDistance = Vector3.Distance(current.position, m_Head.position);
+			if (headDistance > 1.0f || headDistance < 0.01f)
+			{
+				Debug.LogWarning($"Unusual head distance: {headDistance}m");
+			}
+
+			return true;
 		}
 
 		void IAnimationJobData.SetDefaultValues()
@@ -142,7 +149,6 @@ namespace UnityEngine.Animations.Rigging
 
 		public Vector3Property headTargetPosition;
 		public Vector3Property headTargetRotation;
-		public Vector3Property[] spineCurvature;
 		public FloatProperty chainWeight;
 		public FloatProperty jobWeight { get; set; }
 
@@ -162,11 +168,11 @@ namespace UnityEngine.Animations.Rigging
 				Quaternion headTargetRot = Quaternion.Euler(headTargetRotation.Get(stream));
 				float weight = chainWeight.Get(stream);
 
-				// Get curvature array from properties
-				Vector3[] curvature = new Vector3[spineCurvature.Length];
-				for (int i = 0; i < spineCurvature.Length; i++)
+				// Get curvature array from transform handles
+				Vector3[] curvature = new Vector3[spineJoints.Length];
+				for (int i = 0; i < spineJoints.Length; i++)
 				{
-					curvature[i] = spineCurvature[i].Get(stream);
+					curvature[i] = spineJoints[i].GetLocalPosition(stream);
 				}
 
 				// Apply PDO-IK style distance-based optimization
@@ -297,7 +303,6 @@ namespace UnityEngine.Animations.Rigging
 
 		Vector3 headTargetPosition { get; }
 		Vector3 headTargetRotation { get; }
-		Vector3[] spineCurvature { get; }
 		float chainWeight { get; }
 
 		Vector3[] originalDistances { get; }
@@ -305,7 +310,6 @@ namespace UnityEngine.Animations.Rigging
 		string chainWeightFloatProperty { get; }
 		string headTargetPositionVector3Property { get; }
 		string headTargetRotationVector3Property { get; }
-		string spineCurvatureVector3Property { get; }
 	}
 
 	public class BasisSpineIKConstraintJobBinder<T> : AnimationJobBinder<BasisSpineIKConstraintJob, T>
@@ -328,14 +332,6 @@ namespace UnityEngine.Animations.Rigging
 				originalDistArray[i] = data.originalDistances[i];
 			}
 
-			// Create curvature property array
-			var curvatureProperties = new Vector3Property[data.spineCurvature?.Length ?? 0];
-			for (int i = 0; i < curvatureProperties.Length; i++)
-			{
-				curvatureProperties[i] = Vector3Property.Bind(animator, component,
-					data.spineCurvatureVector3Property + $"[{i}]");
-			}
-
 			BasisSpineIKConstraintJob job = new BasisSpineIKConstraintJob
 			{
 				hips = ReadWriteTransformHandle.Bind(animator, data.hips),
@@ -344,7 +340,6 @@ namespace UnityEngine.Animations.Rigging
 
 				headTargetPosition = Vector3Property.Bind(animator, component, data.headTargetPositionVector3Property),
 				headTargetRotation = Vector3Property.Bind(animator, component, data.headTargetRotationVector3Property),
-				spineCurvature = curvatureProperties,
 				chainWeight = FloatProperty.Bind(animator, component, data.chainWeightFloatProperty),
 
 				originalDistances = originalDistArray,
