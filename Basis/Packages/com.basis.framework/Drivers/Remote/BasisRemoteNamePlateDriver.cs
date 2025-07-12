@@ -1,15 +1,12 @@
 using Basis.Scripts.BasisSdk.Players;
 using Basis.Scripts.Device_Management;
-using Basis.Scripts.Drivers;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Basis.Scripts.UI.NamePlate
 {
     public class BasisRemoteNamePlateDriver : MonoBehaviour
     {
-        private static int count = 0; // Track the number of active elements
         public static BasisRemoteNamePlateDriver Instance;
         public Color NormalColor;
         public Color IsTalkingColor;
@@ -28,6 +25,7 @@ namespace Basis.Scripts.UI.NamePlate
         public Material SelectedNamePlateMaterial;
         [HideInInspector]
         public Mesh RoundedCornersMesh;
+
         public void Awake()
         {
             Instance = this;
@@ -45,6 +43,7 @@ namespace Basis.Scripts.UI.NamePlate
             // Convert Sprite to Mesh with custom width and height
             RoundedCornersMesh = GenerateRoundedQuad();
         }
+
         public void GenerateTextFactory(BasisRemotePlayer remotePlayer, BasisRemoteNamePlate namePlate)
         {
             Text.gameObject.SetActive(true);
