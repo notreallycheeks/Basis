@@ -2,7 +2,6 @@ using Basis.Network.Core;
 using Basis.Network.Server.Generic;
 using Basis.Network.Server.Ownership;
 using BasisNetworkCore;
-using BasisNetworkServer.BasisNetworking;
 using BasisNetworkServer.BasisNetworkMessageProcessor;
 using BasisNetworkServer.Security;
 using LiteNetLib;
@@ -11,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using static Basis.Network.Core.Serializable.SerializableBasis;
 using static BasisNetworkCore.Serializable.SerializableBasis;
 using static SerializableBasis;
@@ -232,6 +230,7 @@ namespace BasisServerHandle
                 SendRemoteSpawnMessage(newPeer, ReadyMessage);
 
                 BasisNetworkResourceManagement.SendOutAllResources(newPeer);
+                BasisNetworkOwnership.SendOutOwnershipInformation(newPeer);
             }
             else
             {
@@ -261,6 +260,8 @@ namespace BasisServerHandle
         {
             OnAuthReceived?.Invoke(Reader, Peer);
         }
+        public static ServerEventHandler OnServerReceived;
+        public delegate void ServerEventHandler(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod);
         #region Avatar and Voice Handling
         public static void SendAvatarMessageToClients(NetPacketReader Reader, NetPeer Peer)
         {
@@ -287,13 +288,14 @@ namespace BasisServerHandle
             Reader.Recycle();
             BasisSavedState.AddLastData(Peer, LocalAvatarSyncMessage);
             ReadOnlySpan<NetPeer> Peers = BasisPlayerArray.GetSnapshot();
+
+            ServerSideSyncPlayerMessage ssspm = CreateServerSideSyncPlayerMessage(LocalAvatarSyncMessage, (ushort)Peer.Id);
             foreach (NetPeer client in Peers)
             {
                 if (client.Id == Peer.Id)
                 {
                     continue;
                 }
-                ServerSideSyncPlayerMessage ssspm = CreateServerSideSyncPlayerMessage(LocalAvatarSyncMessage, (ushort)Peer.Id);
                 BasisServerReductionSystem.AddOrUpdatePlayer(client, ssspm, Peer);
             }
         }
@@ -486,7 +488,11 @@ namespace BasisServerHandle
 
                 if (!BasisSavedState.GetLastAvatarSyncState(peer, out var syncState))
                 {
-                    syncState = new LocalAvatarSyncMessage() { array = new byte[386], AdditionalAvatarDatas = null };
+                    syncState = new LocalAvatarSyncMessage()
+                    {
+                        array = new byte[LocalAvatarSyncMessage.AvatarSyncSize],
+                        AdditionalAvatarDatas = null
+                    };
                     BNL.LogError("Unable to get Last Player Avatar Data! Using Error Fallback");
                 }
 

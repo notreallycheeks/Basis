@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Basis/Assets/_Cheeks.meta
 guid: 1c9d7faa24bfecf45aec9b51d7abbcd0
 folderAsset: yes
+=======
+guid: 300856114675ef8409373c564d770cc6
+>>>>>>> forked/doolys-branch:Basis/Packages/com.basis.server/Contrib/Handles/Dns/Dns.csproj.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

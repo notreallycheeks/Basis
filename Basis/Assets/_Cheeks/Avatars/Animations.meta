@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Basis/Assets/_Cheeks/Avatars/Animations.meta
 guid: 48bb78cb480016e48a1c9c0b4c085f23
 folderAsset: yes
+=======
+guid: 514a7f590b996cd4693742739b151964
+>>>>>>> forked/doolys-branch:Basis/Packages/com.basis.server/Contrib/Handles/Common/Common.csproj.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

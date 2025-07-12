@@ -3,10 +3,8 @@ using Basis.Scripts.Device_Management.Devices.OpenVR;
 using Basis.Scripts.TransformBinders.BoneControl;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.SpatialTracking;
 using Valve.VR;
-
 namespace Basis.Scripts.Device_Management.Devices.Unity_Spatial_Tracking
 {
     [DefaultExecutionOrder(15001)]
@@ -14,7 +12,7 @@ namespace Basis.Scripts.Device_Management.Devices.Unity_Spatial_Tracking
     {
         public TrackedPoseDriver.TrackedPose TrackedPose = TrackedPoseDriver.TrackedPose.Center;
         public BasisOpenVRInputEye BasisOpenVRInputEye;
-        public BasisVirtualSpineDriver BasisVirtualSpine = new BasisVirtualSpineDriver();
+        public BasisLocalVirtualSpineDriver BasisVirtualSpine = new BasisLocalVirtualSpineDriver();
         public void Initialize(TrackedPoseDriver.TrackedPose trackedPose, string UniqueID, string UnUniqueID, string subSystems, bool AssignTrackedRole, BasisBoneTrackedRole basisBoneTrackedRole, SteamVR_Input_Sources SteamVR_Input_Sources)
         {
             TrackedPose = trackedPose;
@@ -36,60 +34,43 @@ namespace Basis.Scripts.Device_Management.Devices.Unity_Spatial_Tracking
         {
             if (PoseDataSource.TryGetDataFromSource(TrackedPose, out Pose resultPose))
             {
-                LocalRawPosition = (float3)resultPose.position;
-                LocalRawRotation = resultPose.rotation;
-                if (hasRoleAssigned)
+                UnscaledDeviceCoord.rotation = resultPose.rotation;
+                UnscaledDeviceCoord.position = (float3)resultPose.position;
+
+                ConvertToScaledDeviceCoord();
+                if (TryGetRole(out var CurrentRole) && CurrentRole == BasisBoneTrackedRole.CenterEye)
                 {
-                    if (Control.HasTracked != BasisHasTracked.HasNoTracker)
-                    {
-                        Control.IncomingData.position = TransformFinalPosition - math.mul(TransformFinalRotation, AvatarPositionOffset * BasisLocalPlayer.Instance.CurrentHeight.SelectedAvatarToAvatarDefaultScale);
-                        Control.IncomingData.rotation = math.mul(TransformFinalRotation, Quaternion.Euler(AvatarRotationOffset));
-                    }
-                }
-                if (TryGetRole(out var CurrentRole))
-                {
-                    if (CurrentRole == BasisBoneTrackedRole.CenterEye)
-                    {
-                        BasisOpenVRInputEye.Simulate();
-                    }
+                    BasisOpenVRInputEye.Simulate();
                 }
             }
-            TransformFinalPosition = LocalRawPosition * BasisLocalPlayer.Instance.CurrentHeight.SelectedAvatarToAvatarDefaultScale;
-            TransformFinalRotation = LocalRawRotation;
+            ControlOnlyAsDevice();
             UpdatePlayerControl();
         }
         public override void ShowTrackedVisual()
-		{
-			if (BasisVisualTracker != null || LoadedDeviceRequest != null) return;
-
-			BasisDeviceMatchSettings Match = BasisDeviceManagement.Instance.BasisDeviceNameMatcher.GetAssociatedDeviceMatchableNames(CommonDeviceIdentifier);
-			if (Match.CanDisplayPhysicalTracker)
-			{
-				var op = Addressables.LoadAssetAsync<GameObject>(Match.DeviceID);
-				GameObject go = op.WaitForCompletion();
-				GameObject gameObject = Object.Instantiate(go);
-				gameObject.name = CommonDeviceIdentifier;
-				gameObject.transform.parent = this.transform;
-				if (gameObject.TryGetComponent(out BasisVisualTracker))
-				{
-					BasisVisualTracker.Initialization(this);
-				}
-			}
-			else
-			{
-				if (UseFallbackModel())
-				{
-					UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<GameObject> op = Addressables.LoadAssetAsync<GameObject>(FallbackDeviceID);
-					GameObject go = op.WaitForCompletion();
-					GameObject gameObject = Object.Instantiate(go);
-					gameObject.name = CommonDeviceIdentifier;
-					gameObject.transform.parent = this.transform;
-					if (gameObject.TryGetComponent(out BasisVisualTracker))
-					{
-						BasisVisualTracker.Initialization(this);
-					}
-				}
-			}
-		}
-	}
+        {
+            if (BasisVisualTracker == null && LoadedDeviceRequest == null)
+            {
+                DeviceSupportInformation Match = BasisDeviceManagement.Instance.BasisDeviceNameMatcher.GetAssociatedDeviceMatchableNames(CommonDeviceIdentifier);
+                if (Match.CanDisplayPhysicalTracker)
+                {
+                    LoadModelWithKey(Match.DeviceID);
+                }
+                else
+                {
+                    if (UseFallbackModel())
+                    {
+                        LoadModelWithKey(FallbackDeviceID);
+                    }
+                }
+            }
+        }
+        public override void PlayHaptic(float duration = 0.25F, float amplitude = 0.5F, float frequency = 0.5F)
+        {
+            BasisDebug.LogError("Spatial does not support Haptics Playback");
+        }
+        public override void PlaySoundEffect(string SoundEffectName, float Volume)
+        {
+            PlaySoundEffectDefaultImplementation(SoundEffectName, Volume);
+        }
+    }
 }

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Basis/Assets/_Cheeks/Scenes/SampleScene.unity.meta
 guid: e72bcbf0d6c236941b482b9337616317
+=======
+guid: 66dbff44392fc9e4593b972523d87bda
+>>>>>>> forked/doolys-branch:Basis/Packages/com.basis.server/Contrib/Handles/Dns.Tests/Tests.csproj.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Basis/Assets/_Cheeks/Avatars.meta
 guid: 942c7a03828dff8449d493d9cbcaa929
 folderAsset: yes
+========
+guid: 07ac7f5cd9352fa4688fad84994849fc
+>>>>>>>> forked/doolys-branch:Basis/Packages/com.basis.server/Basis Server.sln.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
