@@ -21,7 +21,7 @@ public partial class BasisServerReductionSystem
     /// <param name="serverSideSyncPlayer"></param>
     public static void AddOrUpdatePlayer(NetPeer playerID, ServerSideSyncPlayerMessage playerToUpdate, NetPeer serverSideSyncPlayer)
     {
-        SyncedToPlayerPulse playerData =  PlayerSync.GetPulse(serverSideSyncPlayer.Id);
+        SyncedToPlayerPulse playerData = PlayerSync.GetPulse(serverSideSyncPlayer.Id);
         Vector3 Position = BasisNetworkCompressionExtensions.DecompressAndProcessAvatarFaster(playerToUpdate);
         //stage 1 lets update whoever send us this datas last player information
         if (playerData != null)
@@ -163,21 +163,30 @@ public partial class BasisServerReductionSystem
                             // Calculate the distance between the two points
                             float activeDistance = Distance(pulse.Position, playerData.Position);
                             // Adjust the timer interval based on the new syncRateMultiplier
+                            //wherer BSRSMillisecondDefaultInterval is the interval rate we send to players (fastest possible)
+                            //second part of the operation is adding latency to reduce sendout.
+                            //BSRBaseMultiplier = 1
+                            // activeDistance 5m
+                            //0.005f
+                            //   1 * 0.025  = 1 + (5 * 005f);
+                            // 50 * 1 * 0.025
                             int adjustedInterval = (int)(Configuration.BSRSMillisecondDefaultInterval * (Configuration.BSRBaseMultiplier + (activeDistance * Configuration.BSRSIncreaseRate)));
                             if (adjustedInterval > byte.MaxValue)
                             {
                                 adjustedInterval = byte.MaxValue;
                             }
                             byte ByteAdjusted = (byte)adjustedInterval;
-                            if (playerData.serverSideSyncPlayerMessage.interval != ByteAdjusted)
+                            if (playerData.LastInterval != ByteAdjusted)
                             {
+                                playerData.LastInterval = ByteAdjusted;
                                 //  Console.WriteLine("Adjusted Interval is" + adjustedInterval);
                                 playerData.timer.Change(adjustedInterval, adjustedInterval);
                                 //how long does this data need to last for
-                                playerData.serverSideSyncPlayerMessage.interval = ByteAdjusted;
                             }
+                            playerData.serverSideSyncPlayerMessage.interval = ByteAdjusted;
+
                             int Size = playerID.localClient.GetPacketsCountInQueue(BasisNetworkCommons.MovementChannel, DeliveryMethod.Sequenced);
-                            if (Size < MaxMessages)
+                            if (Size < MaxMessages && playerData.Writer != null)
                             {
                                 playerData.serverSideSyncPlayerMessage.Serialize(playerData.Writer);
                                 NetworkServer.SendOutValidated(playerID.localClient, playerData.Writer, BasisNetworkCommons.MovementChannel, DeliveryMethod.Sequenced);

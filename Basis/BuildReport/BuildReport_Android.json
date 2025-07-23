@@ -1,0 +1,1973 @@
+{
+    "summaryResult": "Succeeded",
+    "outputPath": "F:/repository/basis/BasisProject/Basis/./AssetBundles/Android",
+    "totalSizeMB": 8.173224449157715,
+    "platform": "Android",
+    "TimeTaken": "2025-07-11 18:28:44",
+    "SummarizeErrors": "",
+    "steps": [
+        {
+            "name": "Build Asset Bundles",
+            "durationTicks": 184876481,
+            "depth": 0,
+            "messages": []
+        },
+        {
+            "name": "Calculate asset bundles to be built",
+            "durationTicks": 8365,
+            "depth": 1,
+            "messages": []
+        },
+        {
+            "name": "Prebuild Cleanup and Recompile",
+            "durationTicks": 128395583,
+            "depth": 1,
+            "messages": []
+        },
+        {
+            "name": "Compile scripts",
+            "durationTicks": 127880418,
+            "depth": 2,
+            "messages": []
+        },
+        {
+            "name": "Generate and validate platform script types",
+            "durationTicks": 366091,
+            "depth": 2,
+            "messages": []
+        },
+        {
+            "name": "Build bundle: f02a52d022dd4ed0beeff198c543939620250712",
+            "durationTicks": 50825266,
+            "depth": 1,
+            "messages": []
+        }
+    ],
+    "summary": {
+        "buildStartTimeTicks": 638878805046533755,
+        "totalTimeTicks": 184876481,
+        "guid": "00000000000000000000000000000000",
+        "platform": 13,
+        "platformGroup": 0,
+        "options": 0,
+        "outputPath": "F:/repository/basis/BasisProject/Basis/./AssetBundles/Android",
+        "totalSize": 8570247,
+        "totalErrors": 0,
+        "totalWarnings": 0,
+        "result": 1,
+        "buildType": 2,
+        "multiProcessEnabled": false
+    },
+    "files": [
+        {
+            "id": 0,
+            "path": "F:/repository/basis/BasisProject/Basis/f02a52d022dd4ed0beeff198c543939620250712/CAB-228da6116a4dbc85e6d9568f4a9521de",
+            "role": "SharedAssets",
+            "size": 5859648
+        },
+        {
+            "id": 1,
+            "path": "F:/repository/basis/BasisProject/Basis/f02a52d022dd4ed0beeff198c543939620250712/CAB-228da6116a4dbc85e6d9568f4a9521de.resS",
+            "role": "StreamingResourceFile",
+            "size": 81512528
+        },
+        {
+            "id": 2,
+            "path": "F:/repository/basis/BasisProject/Basis/f02a52d022dd4ed0beeff198c543939620250712",
+            "role": "AssetBundle",
+            "size": 8567329
+        },
+        {
+            "id": 3,
+            "path": "F:/repository/basis/BasisProject/Basis/f02a52d022dd4ed0beeff198c543939620250712.manifest",
+            "role": "AssetBundleTextManifest",
+            "size": 1107
+        },
+        {
+            "id": 4,
+            "path": "F:/repository/basis/BasisProject/Basis/Android/CAB-e4ba7dbec84ca82e006b0387f14d1c10",
+            "role": "ResourcesFile",
+            "size": 4252
+        },
+        {
+            "id": 5,
+            "path": "F:/repository/basis/BasisProject/Basis/Android",
+            "role": "ManifestAssetBundle",
+            "size": 1602
+        },
+        {
+            "id": 6,
+            "path": "F:/repository/basis/BasisProject/Basis/Android.manifest",
+            "role": "AssetBundleTextManifest",
+            "size": 209
+        }
+    ],
+    "packedAssets": [
+        {
+            "shortPath": "CAB-228da6116a4dbc85e6d9568f4a9521de",
+            "overhead": 123183,
+            "contents": [
+                {
+                    "id": -9137728804563131458,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 121728,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -9126265866487259577,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 121808,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -9119035369482772576,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 121856,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -9075884714873865611,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 121936,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8911657854478245372,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 122016,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8892529466948590284,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 122064,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8863085406442833212,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 122144,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8831068336712642258,
+                    "type": "UnityEngine.Mesh",
+                    "packedSize": 5327064,
+                    "offset": 122224,
+                    "sourceAssetGUID": "93749ae6c10a2ac499428b482579e28b",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/sweater_wolf_v1.fbx"
+                },
+                {
+                    "id": -8714013239055339122,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5449296,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8570635363424184894,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5449376,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8567819056222733343,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 224,
+                    "offset": 5449424,
+                    "sourceAssetGUID": "358364d079da91b42bad543abc93bb29",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/hairglow-mono_emission.png"
+                },
+                {
+                    "id": -8557326449494308395,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5449648,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8487397338731234086,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 224,
+                    "offset": 5449696,
+                    "sourceAssetGUID": "840bb65bc6231914bbc9b674e2b059b9",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Atlas_21806_Emission_LCD.png"
+                },
+                {
+                    "id": -8420063057178240777,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5449920,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8407410095251884850,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5450000,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8364121305767682823,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5450048,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8311216853593145355,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5450128,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8308515329803680513,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5450176,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -8146663715479098399,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5450256,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7999327882332215696,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5450304,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7902959884583145780,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 220,
+                    "offset": 5450352,
+                    "sourceAssetGUID": "64b46e719821420449353f44799f5591",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/tda_hair_haku_opaque.png"
+                },
+                {
+                    "id": -7867967984740824170,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5450576,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7750864964328226897,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5450624,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7281559772082157009,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5450704,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7221302598821838297,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5450752,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7209914005897822530,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5450800,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7129342341921228544,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5450880,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7111624359209942377,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5450960,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -7039305787584547228,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5451008,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6864756097758746101,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5451056,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6774923411775423438,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5451104,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6706140951034284654,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 92,
+                    "offset": 5451184,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6700509668568311435,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5451280,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6694593093125282248,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 31,
+                    "offset": 5451328,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6583705418781834125,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5451360,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6416376129468648942,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5451408,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6236483003233388228,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5451488,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6170233334773451098,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5451536,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -6088428303074167357,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5451616,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5971950289712764253,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5451664,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5893601708450706459,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5451712,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5824521759824253673,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5451760,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5767405200910795296,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5451840,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5628077140280730725,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5451888,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5617933897880165078,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5451968,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5501670626784550325,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5452016,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5467248429113159205,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5452096,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5362515840144665041,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5452176,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5329237125475446001,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5452224,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5253525653677546769,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5452272,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5199220870157432019,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5452352,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5170957242994962642,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5452432,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5155989949316858139,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5452480,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5059915563766303050,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5452560,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -5004358096732705811,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 216,
+                    "offset": 5452640,
+                    "sourceAssetGUID": "f33b9af10d9785848bae1f91c065ebcf",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/Eye_Combined_BW.png"
+                },
+                {
+                    "id": -4883243592083105962,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5452864,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -4874807479180385374,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 92,
+                    "offset": 5452912,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -4833629358709154236,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5453008,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -4749638523815722919,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5453056,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -4522870934300146628,
+                    "type": "UnityEditor.MonoScript",
+                    "packedSize": 92,
+                    "offset": 121632,
+                    "sourceAssetGUID": "d50560fa4580c0743ae88a61a873ea83",
+                    "sourceAssetPath": "Packages/com.basis.sdk/Scripts/Basis Components/BasisAvatar.cs"
+                },
+                {
+                    "id": -4360787344265262402,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5453104,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -4183192050357731291,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5453152,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -4051631677823659116,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5453200,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3997628572586709505,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5453280,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3856372540881470825,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5453360,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3844499699939955448,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5453408,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3812374541670677826,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5453488,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3765694647939847836,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5453536,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3716934465568403668,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5453584,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3688124187425824109,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5453632,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3508499126859690414,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5453712,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3505006573560844540,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5453792,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3485602058738465429,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5453840,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3410394956091778341,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5453888,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3226673766790099267,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5453936,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3207680777002395336,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 92,
+                    "offset": 5454016,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3138372956868541051,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5454112,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -3068450216088963099,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5454160,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -2908532709056266661,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5454240,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -2883815783572814055,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5454320,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -2811145644958949432,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 92,
+                    "offset": 5454368,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -2659752505520470300,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5454464,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -2624066399574949723,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5454512,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -2473033997075926299,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5454560,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -2437954453210527100,
+                    "type": "UnityEngine.Shader",
+                    "packedSize": 261272,
+                    "offset": 5454640,
+                    "sourceAssetGUID": "933532a4fcc9baf4fa0491de14d08ed7",
+                    "sourceAssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Lit.shader"
+                },
+                {
+                    "id": -2383429423479903051,
+                    "type": "UnityEngine.Shader",
+                    "packedSize": 4004,
+                    "offset": 5715920,
+                    "sourceAssetGUID": "36e335017ad71d54fbb10842863188ae",
+                    "sourceAssetPath": "Packages/com.unity.render-pipelines.core/Runtime/RenderPipelineResources/FallbackShader.shader"
+                },
+                {
+                    "id": -2370456610831988480,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5719936,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -1987358728439208981,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5720016,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -1979961613226804000,
+                    "type": "UnityEngine.Avatar",
+                    "packedSize": 36076,
+                    "offset": 5720064,
+                    "sourceAssetGUID": "93749ae6c10a2ac499428b482579e28b",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/sweater_wolf_v1.fbx"
+                },
+                {
+                    "id": -1970453724232376108,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5756144,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -1941970062647266097,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5756192,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -1868105978235255619,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5756272,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -1832349362256101463,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5756352,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -1808302741533888603,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5756400,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -1430035349518868056,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5756480,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -988117464332235058,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5756560,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -976833936871062371,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5756640,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -769825329142272935,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 284,
+                    "offset": 5756688,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -608158812643571681,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5756976,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -598193757689711028,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5757024,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -426492911650919652,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5757072,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -415885723554087611,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5757120,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -407756938414047786,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5757168,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -267975772255478938,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 128,
+                    "offset": 5757248,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -252080808818320611,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5757376,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -215953851927817072,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5757456,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -193384437330737501,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5757504,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": -62016463739305732,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5757552,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1,
+                    "type": "UnityEngine.AssetBundle",
+                    "packedSize": 2912,
+                    "offset": 5757600,
+                    "sourceAssetGUID": "00000000000000000000000000000000",
+                    "sourceAssetPath": "AssetBundle Object"
+                },
+                {
+                    "id": 22498962060428052,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5760512,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 70719170682564114,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5760560,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 140876252420759097,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5760640,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 245869785490476492,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5760688,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 280191206700277596,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5760736,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 357801460405633554,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5760816,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 377701610244204646,
+                    "type": "UnityEngine.Shader",
+                    "packedSize": 6988,
+                    "offset": 5760864,
+                    "sourceAssetGUID": "e6e9a19c3678ded42a3bc431ebef7dbd",
+                    "sourceAssetPath": "Packages/com.unity.render-pipelines.universal/Shaders/Utils/FallbackError.shader"
+                },
+                {
+                    "id": 471374860727128454,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5767856,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 670133021504928085,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5767936,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 730510537551630011,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 31,
+                    "offset": 5767984,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 772317431902760102,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5768016,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 902329256242749508,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5768064,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 918328163569343913,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5768112,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 930352691542549086,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5768160,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1058510967117249704,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5768208,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1075344460346024523,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5768288,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1140511414595630275,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5768368,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1267637429978661117,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5768448,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1298421361053190651,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5768528,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1318835347175789054,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5768576,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1358082897301512727,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5768656,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1407393331702421953,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5768736,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1412136026046131559,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5768784,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1467544221361878088,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5768832,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1644392728399000248,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5768912,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1653742943432004423,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5768992,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1661625022777808874,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5769072,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1670654527102855687,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5769152,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1746962822783864333,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5769232,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1787621344414040309,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 31,
+                    "offset": 5769280,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1935848235446285512,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5769312,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1949821717601853321,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5769360,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1957079647632808243,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5769440,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 1999981599683904420,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5769520,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 2020946271485372377,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5769568,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 2030689248022728639,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5769648,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 2416639733494250121,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5769728,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 2462874806934096389,
+                    "type": "UnityEngine.Material",
+                    "packedSize": 27596,
+                    "offset": 5769808,
+                    "sourceAssetGUID": "6757b446793a0844cacd44fb2a110a38",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/Hair.mat"
+                },
+                {
+                    "id": 2583137465744523691,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5797408,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 2652255281126816678,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5797456,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 2981100454450518293,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5797504,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3020822754365944530,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5797584,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3110652656108117710,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5797664,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3117831066255491608,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5797744,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3127793578231828534,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5797792,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3435094383193032730,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5797872,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3476358107648689502,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5797952,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3603838262389192796,
+                    "type": "UnityEngine.Animator",
+                    "packedSize": 56,
+                    "offset": 5798032,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3615556275082388252,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 232,
+                    "offset": 5798096,
+                    "sourceAssetGUID": "f14bc47fb91c6d44898568c61df4e880",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Atlas_21806_black_whitehoodie.png"
+                },
+                {
+                    "id": 3642135324257727207,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5798336,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3833154329729899672,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5798416,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3841491616177608377,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5798464,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3845875400405357863,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 92,
+                    "offset": 5798544,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3853706034560310304,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5798640,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 3875351609039856484,
+                    "type": "UnityEngine.Material",
+                    "packedSize": 27596,
+                    "offset": 5798720,
+                    "sourceAssetGUID": "895246bfa4bbf9847b4cfaebc7d8538d",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/Eye.mat"
+                },
+                {
+                    "id": 4057537675717159715,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5826320,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4133782738145742063,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5826368,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4162380355091060290,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5826448,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4283349384561989608,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5826496,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4286119308172316331,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5826544,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4406651589107171969,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5826624,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4442737174748489877,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5826672,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4548632137716110894,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5826720,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4750734366042177687,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5826800,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 4916743159416537280,
+                    "type": "UnityEngine.Material",
+                    "packedSize": 27720,
+                    "offset": 5826848,
+                    "sourceAssetGUID": "8be6353636c619f4d902da7ab4854158",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/Body.mat"
+                },
+                {
+                    "id": 4971286340260508138,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5854576,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5008676927574688778,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5854656,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5097390520259135749,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5854704,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5193052531388965870,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5854784,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5552465938070627740,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5854832,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5660151631987752750,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5854880,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5715959789926687387,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5854960,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5733718541163768984,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5855040,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5816604040038941406,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 128,
+                    "offset": 5855120,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 5957473452614428976,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5855248,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6162829650100929229,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5855328,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6175165435926542130,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5855376,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6387297328977105202,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5855424,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6423131499764195495,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5855504,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6504980133711765869,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5855584,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6509542656619817581,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5855664,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6575500271814125222,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5855712,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6680388279964983141,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5855760,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6878413303962776303,
+                    "type": "UnityEngine.SkinnedMeshRenderer",
+                    "packedSize": 1428,
+                    "offset": 5855840,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6906412702676884612,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5857280,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 6942002044997986387,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5857360,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7058936444420176375,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5857408,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7187637446509089565,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 31,
+                    "offset": 5857488,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7188296532187614295,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5857520,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7200092001464022236,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5857600,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7275467652713575556,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5857680,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7287461736919381336,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5857760,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7380334210345289740,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5857808,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7422256294058433167,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5857888,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7559053311626482994,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5857968,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7596044505930492407,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 43,
+                    "offset": 5858016,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7608224031306221080,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 128,
+                    "offset": 5858064,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7696266483956023661,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5858192,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7908357361504331715,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5858240,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7927456154710894074,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5858320,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 7971164524305748918,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5858368,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8167936001169227272,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5858416,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8262189591640434033,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5858464,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8426740823754621845,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5858512,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8450197024127517604,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 116,
+                    "offset": 5858560,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8498395680201767180,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5858688,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8804541113694191875,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5858768,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8841988957085793585,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5858816,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8898513346234906579,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5858864,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8899072221775983590,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 68,
+                    "offset": 5858944,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 8907195804630486506,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 91,
+                    "offset": 5859024,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 9074949415293968374,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 35,
+                    "offset": 5859120,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 9091652026350373169,
+                    "type": "UnityEngine.MonoBehaviour",
+                    "packedSize": 352,
+                    "offset": 5859168,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 9138038727387997300,
+                    "type": "UnityEngine.GameObject",
+                    "packedSize": 39,
+                    "offset": 5859520,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                },
+                {
+                    "id": 9151825828201439039,
+                    "type": "UnityEngine.Transform",
+                    "packedSize": 80,
+                    "offset": 5859568,
+                    "sourceAssetGUID": "a716328067674d3488590dd6bf1d053b",
+                    "sourceAssetPath": "Assets/TemporaryStorage/f02a52d022dd4ed0beeff198c543939620250712.prefab"
+                }
+            ]
+        },
+        {
+            "shortPath": "CAB-228da6116a4dbc85e6d9568f4a9521de.resS",
+            "overhead": 0,
+            "contents": [
+                {
+                    "id": 0,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 626288,
+                    "offset": 0,
+                    "sourceAssetGUID": "358364d079da91b42bad543abc93bb29",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/hairglow-mono_emission.png"
+                },
+                {
+                    "id": 0,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 39816832,
+                    "offset": 626288,
+                    "sourceAssetGUID": "840bb65bc6231914bbc9b674e2b059b9",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Atlas_21806_Emission_LCD.png"
+                },
+                {
+                    "id": 0,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 626288,
+                    "offset": 40443120,
+                    "sourceAssetGUID": "64b46e719821420449353f44799f5591",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/tda_hair_haku_opaque.png"
+                },
+                {
+                    "id": 0,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 626288,
+                    "offset": 41069408,
+                    "sourceAssetGUID": "f33b9af10d9785848bae1f91c065ebcf",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Materials/Eye_Combined_BW.png"
+                },
+                {
+                    "id": 0,
+                    "type": "UnityEngine.Texture2D",
+                    "packedSize": 39816832,
+                    "offset": 41695696,
+                    "sourceAssetGUID": "f14bc47fb91c6d44898568c61df4e880",
+                    "sourceAssetPath": "Assets/_Cheeks/Avatars/Atlas_21806_black_whitehoodie.png"
+                }
+            ]
+        },
+        {
+            "shortPath": "CAB-e4ba7dbec84ca82e006b0387f14d1c10",
+            "overhead": 4040,
+            "contents": [
+                {
+                    "id": 1,
+                    "type": "UnityEngine.AssetBundle",
+                    "packedSize": 104,
+                    "offset": 4032,
+                    "sourceAssetGUID": "00000000000000000000000000000000",
+                    "sourceAssetPath": "AssetBundle Object"
+                },
+                {
+                    "id": 2,
+                    "type": "UnityEngine.AssetBundleManifest",
+                    "packedSize": 108,
+                    "offset": 4144,
+                    "sourceAssetGUID": "00000000000000000000000000000000",
+                    "sourceAssetPath": "Built-in AssetBundleManifest: AssetBundleManifest"
+                }
+            ]
+        }
+    ]
+}
