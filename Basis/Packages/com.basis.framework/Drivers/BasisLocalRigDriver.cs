@@ -74,7 +74,7 @@ namespace Basis.Scripts.Drivers
 		{
 			// --- IK Target ---
 			//ApplyBoneIKTarget(HeadTwoBoneIK, BasisLocalBoneDriver.HeadControl.OutgoingWorldData.position, BasisLocalBoneDriver.HeadControl.OutgoingWorldData.rotation);
-			ApplySpineIKTarget(BasisLocalBoneDriver.Head.OutgoingWorldData.position, BasisLocalBoneDriver.Head.OutgoingWorldData.rotation);
+			ApplySpineIKTarget(BasisLocalBoneDriver.Head.OutgoingWorldData.position, BasisLocalBoneDriver.Head.OutgoingWorldData.rotation, BasisLocalBoneDriver.Hips.OutgoingWorldData.position, BasisLocalBoneDriver.Hips.OutgoingWorldData.rotation);
 			ApplyBoneIKTarget(LeftFootTwoBoneIK, BasisLocalBoneDriver.LeftFootControl.OutgoingWorldData.position, BasisLocalBoneDriver.LeftFootControl.OutgoingWorldData.rotation);
 			ApplyBoneIKTarget(RightFootTwoBoneIK, BasisLocalBoneDriver.RightFootControl.OutgoingWorldData.position, BasisLocalBoneDriver.RightFootControl.OutgoingWorldData.rotation);
 			ApplyBoneIKTarget(LeftHandTwoBoneIK, BasisLocalBoneDriver.LeftHandControl.OutgoingWorldData.position, BasisLocalBoneDriver.LeftHandControl.OutgoingWorldData.rotation);
@@ -94,12 +94,14 @@ namespace Basis.Scripts.Drivers
 			ApplyBoneIKHint(RightHandTwoBoneIK, BasisLocalBoneDriver.RightLowerArmControl.OutgoingWorldData.position, BasisLocalBoneDriver.RightLowerArmControl.OutgoingWorldData.rotation);
 		}
 
-		public void ApplySpineIKTarget(Vector3 headPosition, Quaternion headRotation)
+		public void ApplySpineIKTarget(Vector3 headPosition, Quaternion headRotation, Vector3 hipPosition, Quaternion hipRotation)
 		{
 			if (SpineIK != null)
 			{
 				SpineIK.data.headTargetPosition = headPosition;
 				SpineIK.data.headTargetRotation = headRotation.eulerAngles;
+				SpineIK.data.hipsTargetPosition = hipPosition;
+				SpineIK.data.hipsTargetRotation = hipRotation.eulerAngles;
 			}
 		}
 
@@ -186,8 +188,15 @@ namespace Basis.Scripts.Drivers
 			RightHand(driver);
 			LeftFoot(driver);
 			RightFoot(driver);
-			LeftToe(driver);
-			RightToe(driver);
+
+			if (references.HasleftToes)
+			{
+				LeftToe(driver);
+			}
+			if (references.HasrightToes)
+			{
+				RightToe(driver);
+			}
 
 			if (references.Hips.gameObject.TryGetComponent<RigTransform>(out RigTransform RigTransform) == false)
 			{
@@ -199,9 +208,9 @@ namespace Basis.Scripts.Drivers
 		{
 			var spineRig = CreateOrGetRig("Rig Spine", true, out SpineRig, out RigSpineLayer);
 			List<BasisLocalBoneControl> controls = new List<BasisLocalBoneControl>();
-			if (driver.FindBone(out BasisLocalBoneControl Neck, BasisBoneTrackedRole.Neck))
+			if (driver.FindBone(out BasisLocalBoneControl Hip, BasisBoneTrackedRole.Hips))
 			{
-				controls.Add(Neck);
+				controls.Add(Hip);
 			}
 			if (driver.FindBone(out BasisLocalBoneControl Head, BasisBoneTrackedRole.Head))
 			{

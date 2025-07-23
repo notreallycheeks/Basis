@@ -16,6 +16,10 @@ namespace UnityEngine.Animations.Rigging
 		public Vector3 headTargetPosition;
 		[SyncSceneToStream, SerializeField]
 		public Vector3 headTargetRotation;
+		[SyncSceneToStream, SerializeField]
+		public Vector3 hipsTargetPosition;
+		[SyncSceneToStream, SerializeField]
+		public Vector3 hipsTargetRotation;
 
 		[SyncSceneToStream, SerializeField]
 		public float ChainWeight;
@@ -26,7 +30,11 @@ namespace UnityEngine.Animations.Rigging
 		// Interface implementation using head-specific naming
 		Vector3 BasisISpineIKConstraintData.headTargetPosition { get => headTargetPosition; }
 		Vector3 BasisISpineIKConstraintData.headTargetRotation { get => headTargetRotation; }
+		Vector3 BasisISpineIKConstraintData.hipsTargetPosition { get => hipsTargetPosition; }
+		Vector3 BasisISpineIKConstraintData.hipsTargetRotation { get => hipsTargetRotation; }
 		float BasisISpineIKConstraintData.chainWeight { get => ChainWeight; }
+		Vector3[] BasisISpineIKConstraintData.originalDistances { get => m_OriginalDistances; }
+		Quaternion[] BasisISpineIKConstraintData.originalRelativeRotations { get => m_OriginalRelativeRotations; }
 
 		public Transform hips { get => m_Hips; set => m_Hips = value; }
 		public Transform[] spineJoints { get => m_SpineJoints; set => m_SpineJoints = value; }
@@ -34,6 +42,8 @@ namespace UnityEngine.Animations.Rigging
 		public float chainWeight { get => ChainWeight; set => ChainWeight = value; }
 		public bool maintainSpineLength { get => MaintainSpineLength; set => MaintainSpineLength = value; }
 
+		string BasisISpineIKConstraintData.hipsTargetPositionVector3Property => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(hipsTargetPosition));
+		string BasisISpineIKConstraintData.hipsTargetRotationVector3Property => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(hipsTargetRotation));
 		string BasisISpineIKConstraintData.chainWeightFloatProperty => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(ChainWeight));
 		string BasisISpineIKConstraintData.headTargetPositionVector3Property => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(headTargetPosition));
 		string BasisISpineIKConstraintData.headTargetRotationVector3Property => ConstraintsUtils.ConstructConstraintDataPropertyName(nameof(headTargetRotation));
@@ -41,9 +51,17 @@ namespace UnityEngine.Animations.Rigging
 		[SerializeField]
 		public Vector3[] m_OriginalDistances;
 
+		[SerializeField]
+		public Quaternion[] m_OriginalRelativeRotations;
+
 		public Vector3[] originalDistances
 		{
 			get { return m_OriginalDistances; }
+		}
+
+		public Quaternion[] originalRelativeRotations
+		{
+			get { return m_OriginalRelativeRotations; }
 		}
 
 		bool IAnimationJobData.IsValid() =>
@@ -99,6 +117,7 @@ namespace UnityEngine.Animations.Rigging
 
 			int jointCount = m_SpineJoints.Length + 1; // Include root
 			m_OriginalDistances = new Vector3[jointCount];
+			m_OriginalRelativeRotations = new Quaternion[m_SpineJoints.Length];
 
 			// Store original distances between consecutive joints
 			m_OriginalDistances[0] = Vector3.zero; // Root has no previous joint
@@ -110,6 +129,22 @@ namespace UnityEngine.Animations.Rigging
 				{
 					Vector3 offset = m_SpineJoints[i].position - prev.position;
 					m_OriginalDistances[i + 1] = offset;
+					
+					// Store original relative rotation from parent's forward direction
+					// This captures the natural spine curvature
+					Vector3 parentForward = prev.rotation * Vector3.forward;
+					Vector3 jointDirection = (m_SpineJoints[i].position - prev.position).normalized;
+					
+					if (jointDirection.sqrMagnitude > 0.001f)
+					{
+						// Calculate the rotation difference that represents the natural curve
+						m_OriginalRelativeRotations[i] = Quaternion.FromToRotation(parentForward, jointDirection);
+					}
+					else
+					{
+						m_OriginalRelativeRotations[i] = Quaternion.identity;
+					}
+					
 					prev = m_SpineJoints[i];
 				}
 			}
@@ -138,6 +173,85 @@ namespace UnityEngine.Animations.Rigging
 				((IAnimationJobData)m_Data).SetDefaultValues();
 			}
 		}
+		
+		/// <summary>
+		/// Debug method to inspect current spine setup and distances
+		/// </summary>
+		[ContextMenu("Debug Spine Setup")]
+		public void DebugSpineSetup()
+		{
+			Debug.Log("=== SPINE DEBUG SETUP ===");
+			Debug.Log($"Hips: {(m_Data.hips ? m_Data.hips.name : "NULL")}");
+			Debug.Log($"Head: {(m_Data.head ? m_Data.head.name : "NULL")}");
+			Debug.Log($"Spine joints count: {(m_Data.spineJoints?.Length ?? 0)}");
+			
+			if (m_Data.spineJoints != null)
+			{
+				for (int i = 0; i < m_Data.spineJoints.Length; i++)
+				{
+					if (m_Data.spineJoints[i] != null)
+					{
+						Debug.Log($"Spine[{i}]: {m_Data.spineJoints[i].name} at {m_Data.spineJoints[i].position}");
+					}
+					else
+					{
+						Debug.Log($"Spine[{i}]: NULL");
+					}
+				}
+			}
+			
+			Debug.Log($"Original distances count: {(m_Data.originalDistances?.Length ?? 0)}");
+			if (m_Data.originalDistances != null)
+			{
+				for (int i = 0; i < m_Data.originalDistances.Length; i++)
+				{
+					Debug.Log($"OriginalDistance[{i}]: {m_Data.originalDistances[i]} (magnitude: {m_Data.originalDistances[i].magnitude:F4})");
+				}
+			}
+			
+			Debug.Log($"Original relative rotations count: {(m_Data.originalRelativeRotations?.Length ?? 0)}");
+			if (m_Data.originalRelativeRotations != null)
+			{
+				for (int i = 0; i < m_Data.originalRelativeRotations.Length; i++)
+				{
+					Vector3 eulerAngles = m_Data.originalRelativeRotations[i].eulerAngles;
+					Debug.Log($"OriginalRelativeRotation[{i}]: {m_Data.originalRelativeRotations[i]} (euler: {eulerAngles})");
+				}
+			}
+			
+			// Calculate actual current distances for comparison
+			if (m_Data.hips && m_Data.head && m_Data.spineJoints != null)
+			{
+				Debug.Log("=== CURRENT ACTUAL DISTANCES ===");
+				Transform prev = m_Data.hips;
+				float totalActualLength = 0f;
+				
+				for (int i = 0; i < m_Data.spineJoints.Length; i++)
+				{
+					if (m_Data.spineJoints[i] != null)
+					{
+						float distance = Vector3.Distance(prev.position, m_Data.spineJoints[i].position);
+						totalActualLength += distance;
+						Debug.Log($"Actual distance {prev.name} -> {m_Data.spineJoints[i].name}: {distance:F4}m");
+						prev = m_Data.spineJoints[i];
+					}
+				}
+				
+				float headDistance = Vector3.Distance(prev.position, m_Data.head.position);
+				totalActualLength += headDistance;
+				Debug.Log($"Actual distance {prev.name} -> {m_Data.head.name}: {headDistance:F4}m");
+				Debug.Log($"Total actual spine length: {totalActualLength:F4}m");
+				Debug.Log($"Direct hips-to-head distance: {Vector3.Distance(m_Data.hips.position, m_Data.head.position):F4}m");
+				
+				// Calculate natural curve preservation ratio
+				if (totalActualLength > 0.001f)
+				{
+					float directDistance = Vector3.Distance(m_Data.hips.position, m_Data.head.position);
+					float curveRatio = directDistance / totalActualLength;
+					Debug.Log($"Spine compression ratio: {curveRatio:F3} (1.0 = fully extended, <1.0 = curved/compressed)");
+				}
+			}
+		}
 	}
 
 	[Unity.Burst.BurstCompile]
@@ -149,12 +263,16 @@ namespace UnityEngine.Animations.Rigging
 
 		public Vector3Property headTargetPosition;
 		public Vector3Property headTargetRotation;
+		public Vector3Property hipsTargetPosition;
+		public Vector3Property hipsTargetRotation;
+
 		public FloatProperty chainWeight;
 		public FloatProperty jobWeight { get; set; }
 
 		// Distance-based optimization variables
 		public NativeArray<Vector3> originalDistances;
 		public NativeArray<Vector3> currentDistances;
+		public NativeArray<Quaternion> originalRelativeRotations;
 		public bool maintainSpineLength;
 
 		public void ProcessRootMotion(AnimationStream stream) { }
@@ -166,6 +284,10 @@ namespace UnityEngine.Animations.Rigging
 			{
 				Vector3 headTargetPos = headTargetPosition.Get(stream);
 				Quaternion headTargetRot = Quaternion.Euler(headTargetRotation.Get(stream));
+
+				Vector3 hipsTargetPos = hipsTargetPosition.Get(stream);
+				Quaternion hipsTargetRot = Quaternion.Euler(hipsTargetPosition.Get(stream));
+
 				float weight = chainWeight.Get(stream);
 
 				// Get curvature array from transform handles
@@ -176,7 +298,7 @@ namespace UnityEngine.Animations.Rigging
 				}
 
 				// Apply PDO-IK style distance-based optimization
-				SolveSpineIKWithDistanceOptimization(stream, headTargetPos, headTargetRot, curvature, w * weight);
+				SolveSpineIKWithDistanceOptimization(stream, headTargetPos, headTargetRot, hipsTargetPos, hipsTargetRot, curvature, w * weight);
 			}
 			else
 			{
@@ -190,108 +312,32 @@ namespace UnityEngine.Animations.Rigging
 			}
 		}
 
-		private void SolveSpineIKWithDistanceOptimization(AnimationStream stream, Vector3 headTargetPos, Quaternion headTargetRot, Vector3[] curvature, float weight)
+		private void SolveSpineIKWithDistanceOptimization(AnimationStream stream, Vector3 headTargetPos, Quaternion headTargetRot, Vector3 hipsTargetPos, Quaternion hipsTargetRot, Vector3[] curvature, float weight)
 		{
 			if (spineJoints.Length == 0) return;
 
-			// Get current positions
-			Vector3 hipsPos = hips.GetPosition(stream);
-			Vector3 headPos = head.GetPosition(stream);
-
-			// Calculate total spine length from original distances
-			float totalLength = 0f;
-			for (int i = 1; i < originalDistances.Length; i++)
-			{
-				totalLength += originalDistances[i].magnitude;
-			}
-
-			// Calculate direction from hips to head target
-			Vector3 spineDirection = (headTargetPos - hipsPos).normalized;
-			float targetDistance = Vector3.Distance(hipsPos, headTargetPos);
-
-			// Constrain target distance if maintaining spine length
-			if (maintainSpineLength && targetDistance > totalLength)
-			{
-				targetDistance = totalLength;
-				headTargetPos = hipsPos + spineDirection * targetDistance;
-			}
-
-			// Distribute spine joints along the path using distance optimization
-			for (int i = 0; i < spineJoints.Length; i++)
-			{
-				float t = (float)(i + 1) / (spineJoints.Length + 1);
-
-				// Apply curvature influence (use per-joint curvature if available)
-				Vector3 jointCurvature = Vector3.zero;
-				if (curvature != null && i < curvature.Length)
-				{
-					jointCurvature = curvature[i];
-				}
-				Vector3 curvatureOffset = ApplyCurvature(t, jointCurvature, spineDirection);
-
-				// Calculate target position for this joint
-				Vector3 jointTargetPos = Vector3.Lerp(hipsPos, headTargetPos, t) + curvatureOffset;
-
-				// Get current joint position and apply weighted movement
-				Vector3 currentPos = spineJoints[i].GetPosition(stream);
-				Vector3 newPos = Vector3.Lerp(currentPos, jointTargetPos, weight);
-
-				// Maintain original distances if required
-				if (maintainSpineLength && i > 0)
-				{
-					Vector3 prevPos = (i == 0) ? hipsPos : spineJoints[i - 1].GetPosition(stream);
-					float originalDist = originalDistances[i + 1].magnitude;
-					Vector3 constrainedPos = ConstrainDistance(prevPos, newPos, originalDist);
-					newPos = Vector3.Lerp(newPos, constrainedPos, 0.5f);
-				}
-
-				spineJoints[i].SetPosition(stream, newPos);
-
-				// Apply rotation influence
-				if (i == spineJoints.Length - 1) // Last spine joint influences head rotation
-				{
-					Quaternion currentRot = spineJoints[i].GetRotation(stream);
-					Vector3 forwardDir = (headTargetPos - newPos).normalized;
-					Quaternion lookRot = Quaternion.LookRotation(forwardDir, Vector3.up);
-					Quaternion blendedRot = Quaternion.Lerp(currentRot, lookRot * headTargetRot, weight * 0.5f);
-					spineJoints[i].SetRotation(stream, blendedRot);
-				}
-			}
-
-			// Update head position and rotation
-			Vector3 finalJointPos = spineJoints[spineJoints.Length - 1].GetPosition(stream);
-			Vector3 headOffset = head.GetPosition(stream) - finalJointPos;
-			if (maintainSpineLength)
-			{
-				headOffset = headOffset.normalized * originalDistances[originalDistances.Length - 1].magnitude;
-			}
-
-			Vector3 newHeadPos = finalJointPos + headOffset;
-			head.SetPosition(stream, Vector3.Lerp(head.GetPosition(stream), newHeadPos, weight));
-
-			Quaternion newHeadRot = Quaternion.Lerp(head.GetRotation(stream), headTargetRot, weight);
-			head.SetRotation(stream, newHeadRot);
+			SetHips(stream, hipsTargetPos, hipsTargetRot);
+			SetHead(stream, headTargetPos, headTargetRot);
+			SetSpine(stream);
 		}
 
-		private Vector3 ApplyCurvature(float t, Vector3 jointCurvature, Vector3 spineDirection)
+		private void SetHead(AnimationStream stream, Vector3 headTargetPos, Quaternion headTargetRot)
 		{
-			// Apply sine wave curvature based on the PDO-IK approach
-			float curvatureInfluence = Mathf.Sin(t * Mathf.PI);
-			Vector3 perpendicular = Vector3.Cross(spineDirection, Vector3.up).normalized;
-			if (perpendicular.magnitude < 0.1f)
-			{
-				perpendicular = Vector3.Cross(spineDirection, Vector3.forward).normalized;
-			}
-
-			return perpendicular * jointCurvature.x * curvatureInfluence +
-				   Vector3.up * jointCurvature.y * curvatureInfluence +
-				   Vector3.Cross(perpendicular, Vector3.up).normalized * jointCurvature.z * curvatureInfluence;
+			// SET HEAD TO TARGET IMMEDIATELY - 1:1 positioning  
+			head.SetPosition(stream, headTargetPos);
+			head.SetRotation(stream, headTargetRot);
 		}
 
-		private Vector3 ConstrainDistance(Vector3 fromPos, Vector3 toPos, float targetDistance)
+		private void SetHips(AnimationStream stream, Vector3 hipsTargetPos, Quaternion hipsTargetRot)
 		{
-			Vector3 direction = (toPos - fromPos).normalized;
-			return fromPos + direction * targetDistance;
+			// SET HIPS TO TARGET IMMEDIATELY - 1:1 positioning
+			hips.SetPosition(stream, hipsTargetPos);
+			//hips.SetRotation(stream, hipsTargetRot);
+		}
+
+		private void SetSpine(AnimationStream stream)
+		{
+			
 		}
 	}
 
@@ -303,13 +349,18 @@ namespace UnityEngine.Animations.Rigging
 
 		Vector3 headTargetPosition { get; }
 		Vector3 headTargetRotation { get; }
+		Vector3 hipsTargetPosition { get; }
+		Vector3 hipsTargetRotation { get; }
 		float chainWeight { get; }
 
 		Vector3[] originalDistances { get; }
+		Quaternion[] originalRelativeRotations { get; }
 
 		string chainWeightFloatProperty { get; }
 		string headTargetPositionVector3Property { get; }
 		string headTargetRotationVector3Property { get; }
+		string hipsTargetPositionVector3Property { get; }
+		string hipsTargetRotationVector3Property { get; }
 	}
 
 	public class BasisSpineIKConstraintJobBinder<T> : AnimationJobBinder<BasisSpineIKConstraintJob, T>
@@ -326,10 +377,18 @@ namespace UnityEngine.Animations.Rigging
 			// Create native arrays for distance optimization
 			var originalDistArray = new NativeArray<Vector3>(data.originalDistances.Length, Allocator.Persistent);
 			var currentDistArray = new NativeArray<Vector3>(data.originalDistances.Length, Allocator.Persistent);
+			var originalRotArray = new NativeArray<Quaternion>(data.originalRelativeRotations?.Length ?? 0, Allocator.Persistent);
 
 			for (int i = 0; i < data.originalDistances.Length; i++)
 			{
 				originalDistArray[i] = data.originalDistances[i];
+			}
+			if (data.originalRelativeRotations != null)
+			{
+				for (int i = 0; i < data.originalRelativeRotations.Length; i++)
+				{
+					originalRotArray[i] = data.originalRelativeRotations[i];
+				}
 			}
 
 			BasisSpineIKConstraintJob job = new BasisSpineIKConstraintJob
@@ -340,10 +399,13 @@ namespace UnityEngine.Animations.Rigging
 
 				headTargetPosition = Vector3Property.Bind(animator, component, data.headTargetPositionVector3Property),
 				headTargetRotation = Vector3Property.Bind(animator, component, data.headTargetRotationVector3Property),
+				hipsTargetPosition = Vector3Property.Bind(animator, component, data.hipsTargetPositionVector3Property),
+				hipsTargetRotation = Vector3Property.Bind(animator, component, data.hipsTargetRotationVector3Property),
 				chainWeight = FloatProperty.Bind(animator, component, data.chainWeightFloatProperty),
 
 				originalDistances = originalDistArray,
 				currentDistances = currentDistArray,
+				originalRelativeRotations = originalRotArray,
 				maintainSpineLength = true
 			};
 
@@ -356,6 +418,8 @@ namespace UnityEngine.Animations.Rigging
 				job.originalDistances.Dispose();
 			if (job.currentDistances.IsCreated)
 				job.currentDistances.Dispose();
+			if (job.originalRelativeRotations.IsCreated)
+				job.originalRelativeRotations.Dispose();
 		}
 	}
 }

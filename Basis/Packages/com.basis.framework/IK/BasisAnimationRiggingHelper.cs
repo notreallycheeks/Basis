@@ -64,6 +64,8 @@ public static class BasisAnimationRiggingHelper
 		// Set target to head position/rotation
 		SpineIKConstraint.data.headTargetPosition = head.position;
 		SpineIKConstraint.data.headTargetRotation = head.rotation.eulerAngles;
+        SpineIKConstraint.data.hipsTargetPosition = hips.position;
+        SpineIKConstraint.data.hipsTargetRotation = hips.rotation.eulerAngles;
 
 		GenerateRequiredTransforms(player, head);
 	}
